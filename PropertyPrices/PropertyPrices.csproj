@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Loader.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="PricePredictionRanker.cs.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="NLog" Version="4.6.7" />
+    <PackageReference Include="RestSharp" Version="106.6.10" />
+    <PackageReference Include="SharpLearning.AdaBoost" Version="0.31.5" />
+    <PackageReference Include="SharpLearning.CrossValidation" Version="0.31.5" />
+    <PackageReference Include="SharpLearning.Ensemble" Version="0.31.5" />
+    <PackageReference Include="SharpLearning.FeatureTransformations" Version="0.31.5" />
+    <PackageReference Include="SharpLearning.GradientBoost" Version="0.31.5" />
+    <PackageReference Include="SharpLearning.Neural" Version="0.31.5" />
+    <PackageReference Include="SharpLearning.RandomForest" Version="0.31.5" />
+    <PackageReference Include="System.Data.OleDb" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="UK-HPI-full-file-2019-07.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
