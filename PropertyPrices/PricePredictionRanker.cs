@@ -36,16 +36,13 @@ namespace PropertyPrices
 
         public void Predict()
         {
-
+            //http://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2019-07.csv
             var header = File.ReadLines("UK-HPI-full-file-2019-07.csv").First();
             var columnNames = header.Split(",");
 
-            // Use StreamReader(filepath) when running from filesystem
             var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
 
-            // read feature matrix
             var features = parser.EnumerateRows().ToArray();
-            // read classification targets
             var targets = parser.EnumerateRows(_targetName).ToArray();
 
             string previous = null;
@@ -53,7 +50,7 @@ namespace PropertyPrices
 
             List<double[]> regionFeatures = null;
             List<double> regionTargets = null;
-            var isFirst = true;
+            //var isFirst = true;
             for (int i = 0; i < features.Length; i++)
             {
                 var item = features[i];
@@ -97,22 +94,18 @@ namespace PropertyPrices
                 previous = key;
             }
 
-            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            //var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             //File.WriteAllText("property_data.json", json);
 
             var itemCount = 0;
             foreach (var item in data)
             {
-                // and shift each feature to have a mean value of zero.
                 var meanZeroTransformer = new MeanZeroFeatureTransformer();
 
                 F64Matrix transformed = meanZeroTransformer.Transform(item.Value.Item1);
                 //F64Matrix transformed = item.Value.Item1;
 
                 var numberOfFeatures = transformed.ColumnCount;
-
-                //var splitter = new StratifiedTrainingTestIndexSplitter<double>(trainingPercentage: 0.8, seed: 24);
-                //var split = splitter.SplitSet(transformed, item.Value.Item2);
 
                 //var learner = GetRandomForest();
 
@@ -125,8 +118,6 @@ namespace PropertyPrices
                 var model = learner.Learn(allFeaturesExceptLast, allTargetsExceptLast);
 
                 var prediction = model.Predict(transformed.Row(transformed.RowCount - 1));
-                //learner = null;
-                //model = null;
                 var before = item.Value.Item2[transformed.RowCount - targetOffset - 1];
                 var change = Math.Round(prediction / before, 2);
 
@@ -148,13 +139,11 @@ namespace PropertyPrices
 
         private ILearner<double> GetNeuralnet(int numberOfFeatures)
         {
-            // define the neural net.
             var net = new NeuralNet();
             net.Add(new InputLayer(inputUnits: numberOfFeatures));
             net.Add(new DenseLayer(numberOfFeatures, Activation.Relu));
             net.Add(new SquaredErrorRegressionLayer());
 
-            // using square error as error metric. This is only used for reporting progress.
             var learner = new RegressionNeuralNetLearner(net, learningRate: 0.001, iterations: 2000, loss: new SquareLoss(), batchSize: 180, optimizerMethod: OptimizerMethod.Adam);
 
             return learner;
@@ -168,7 +157,7 @@ namespace PropertyPrices
         }
         private ILearner<double> GetBoost()
         {
-            return new RegressionSquareLossGradientBoostLearner(iterations: 3000,/* learningRate: 0.028,*/ maximumTreeDepth: 2000/*, subSampleRatio: 0.559, featuresPrSplit: 10, runParallel: false*/);
+            return new RegressionSquareLossGradientBoostLearner(iterations: 3000, maximumTreeDepth: 2000);
         }
 
         private ILearner<double> GetAda()

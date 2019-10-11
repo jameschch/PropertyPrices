@@ -8,7 +8,7 @@ namespace PropertyPrices
     class Program
     {
 
-           public static Logger Logger = LogManager.GetLogger("log");
+        public static Logger Logger = LogManager.GetLogger("log");
 
         static void Main(string[] args)
         {
