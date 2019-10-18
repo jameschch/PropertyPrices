@@ -18,6 +18,8 @@ using SharpLearning.RandomForest.Learners;
 using SharpLearning.Neural.Optimizers;
 using SharpLearning.GradientBoost.Learners;
 using SharpLearning.AdaBoost.Learners;
+using SharpLearning.CrossValidation.TimeSeries;
+using System.Globalization;
 
 namespace PropertyPrices
 {
@@ -29,10 +31,9 @@ namespace PropertyPrices
         static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "Westminster" };
 
         double _totalError = 0;
-
+        double _totalCrossError = 0;
         string _targetName = "Flat12m%Change";
-
-        int targetOffset = 2;
+        const int _targetOffset = 3;
 
         public void Predict()
         {
@@ -46,7 +47,7 @@ namespace PropertyPrices
             var targets = parser.EnumerateRows(_targetName).ToArray();
 
             string previous = null;
-            Dictionary<string, (F64Matrix, double[])> data = new Dictionary<string, (F64Matrix, double[])>();
+            Dictionary<string, (List<double[]>, double[])> data = new Dictionary<string, (List<double[]>, double[])>();
 
             List<double[]> regionFeatures = null;
             List<double> regionTargets = null;
@@ -61,7 +62,7 @@ namespace PropertyPrices
                     {
                         if (regionTargets.Any(a => a != -1))
                         {
-                            data.Add(previous, (regionFeatures.ToF64Matrix(), regionTargets.ToArray()));
+                            data.Add(previous, (regionFeatures, regionTargets.ToArray()));
                         }
                     }
                     regionFeatures = new List<double[]>();
@@ -78,16 +79,17 @@ namespace PropertyPrices
                 }
 
                 regionFeatures.Add(item.GetValues(columnNames.Except(excludeColumns).ToArray()).Select(s => string.IsNullOrEmpty(s) ? -1d : double.Parse(s)).ToArray());
+                regionFeatures.Add(item.GetValues(new[] { "Date" }).Select(s => (double)DateTime.Parse(s, new CultureInfo("en-GB")).Ticks).ToArray());
 
                 //last target is future
-                if (i > targetOffset && features.Length - targetOffset - i <= 0)
+                if (i > _targetOffset && features.Length - _targetOffset - i <= 0)
                 {
                     regionTargets.Add(-1);
                 }
                 //target is next observation
-                else if (features[i + targetOffset].GetValue("RegionName") == key)
+                else if (features[i + _targetOffset].GetValue("RegionName") == key)
                 {
-                    var value = targets.Skip(i).Take(targetOffset).ToArray().Where(w => !string.IsNullOrEmpty(w.GetValue(_targetName))).Select(s => s.GetValue(_targetName)).ToArray();
+                    var value = targets.Skip(i).Take(_targetOffset).ToArray().Where(w => !string.IsNullOrEmpty(w.GetValue(_targetName))).Select(s => s.GetValue(_targetName)).ToArray();
                     regionTargets.Add(!value.Any() ? 0d : value.Average(a => double.Parse(a)));
                 }
 
@@ -97,12 +99,18 @@ namespace PropertyPrices
             //var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             //File.WriteAllText("property_data.json", json);
 
+            var regionNames = new BinaryFeatureEncoder().Encode(data.Keys);
+
             var itemCount = 0;
             foreach (var item in data)
             {
                 var meanZeroTransformer = new MeanZeroFeatureTransformer();
+                for (int i = 0; i < item.Value.Item1.Count(); i++)
+                {
+                    item.Value.Item1[i] = item.Value.Item1[i].Concat(regionNames[item.Key]).ToArray();
+                }
 
-                F64Matrix transformed = meanZeroTransformer.Transform(item.Value.Item1);
+                F64Matrix transformed = meanZeroTransformer.Transform(item.Value.Item1.ToArray());
                 //F64Matrix transformed = item.Value.Item1;
 
                 var numberOfFeatures = transformed.ColumnCount;
@@ -113,23 +121,31 @@ namespace PropertyPrices
 
                 var learner = GetAda();
 
-                var allFeaturesExceptLast = (F64Matrix)transformed.Rows(Enumerable.Range(0, transformed.RowCount - targetOffset - 1).ToArray());
-                var allTargetsExceptLast = item.Value.Item2.Take(transformed.RowCount - targetOffset - 1).ToArray();
-                var model = learner.Learn(allFeaturesExceptLast, allTargetsExceptLast);
+                var allObservationsExceptLast = (F64Matrix)transformed.Rows(Enumerable.Range(0, transformed.RowCount - _targetOffset - 1).ToArray());
+                var allTargetsExceptLast = item.Value.Item2.Take(transformed.RowCount - _targetOffset - 1).ToArray();
+                var model = learner.Learn(allObservationsExceptLast, allTargetsExceptLast);
+
+                //var validation = new TimeSeriesCrossValidation<double>((int)(allObservationsExceptLast.RowCount * 0.8), 0, 1);
+                //var validationPredictions = validation.Validate((IIndexedLearner<double>)learner, allObservationsExceptLast, allTargetsExceptLast);
+                //var crossMetric = new MeanSquaredErrorRegressionMetric();
+                //var crossError = crossMetric.Error(validation.GetValidationTargets(allTargetsExceptLast), validationPredictions);
+                //_totalCrossError += crossError;
 
                 var prediction = model.Predict(transformed.Row(transformed.RowCount - 1));
-                var before = item.Value.Item2[transformed.RowCount - targetOffset - 1];
+                var before = item.Value.Item2[transformed.RowCount - _targetOffset - 1];
                 var change = Math.Round(prediction / before, 2);
 
-                var allPrediction = model.Predict(allFeaturesExceptLast);
-                var metric = new MeanSquaredErrorRegressionMetric();
+                var allPrediction = model.Predict(allObservationsExceptLast);
 
+                var metric = new MeanSquaredErrorRegressionMetric();
                 var error = metric.Error(allTargetsExceptLast, allPrediction);
                 _totalError += error;
                 itemCount++;
                 var isLondon = London.Contains(item.Key);
 
+                //var message = $"TotalError: {(int)(_totalError / itemCount)}, TotalCrossError: {(_totalCrossError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, CrossError: {crossError}, Next: {prediction}, Change: {change}";
                 var message = $"TotalError: {(int)(_totalError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, Next: {prediction}, Change: {change}";
+
 
                 Program.Logger.Info(message);
 

@@ -1,0 +1,440 @@
+2019-10-14 15:11:17.0451 TotalError: 0, Region: Aberdeenshire, London: False, Error: 0, Next: 0.09272564533333331, Change: -0.03
+2019-10-14 15:11:29.1353 TotalError: 0, Region: Adur, London: False, Error: 1.3613929220504888E-11, Next: 0.007232698666666648, Change: -0.01
+2019-10-14 15:11:29.4370 TotalError: 0, Region: Allerdale, London: False, Error: 0, Next: -1.792210476, Change: 0.72
+2019-10-14 15:11:29.7891 TotalError: 0, Region: Amber Valley, London: False, Error: 0, Next: -0.8093765123333334, Change: -0.5
+2019-10-14 15:11:30.0775 TotalError: 0, Region: Angus, London: False, Error: 0, Next: 0.5415932773333334, Change: 0.66
+2019-10-14 15:11:30.0840 TotalError: 0, Region: Antrim and Newtownabbey, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:11:30.0840 TotalError: 0, Region: Ards and North Down, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:11:30.4907 TotalError: 0, Region: Argyll and Bute, London: False, Error: 0, Next: 0.8364418723333333, Change: 16.28
+2019-10-14 15:11:30.4907 TotalError: 0, Region: Armagh City Banbridge and Craigavon, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:11:31.9757 TotalError: 0, Region: Arun, London: False, Error: 0, Next: -1.4919249289999998, Change: 1.01
+2019-10-14 15:11:32.6770 TotalError: 0, Region: Ashfield, London: False, Error: 0, Next: -0.30822841566666664, Change: -0.38
+2019-10-14 15:11:33.1946 TotalError: 0, Region: Ashford, London: False, Error: 0, Next: -3.533226991, Change: 1.85
+2019-10-14 15:11:33.6000 TotalError: 0, Region: Aylesbury Vale, London: False, Error: 0, Next: -3.1814985503333335, Change: 1.85
+2019-10-14 15:11:34.0110 TotalError: 0, Region: Babergh, London: False, Error: 0, Next: -1.9774744663333335, Change: 0.75
+2019-10-14 15:11:34.3977 TotalError: 0, Region: Barking and Dagenham, London: True, Error: 0, Next: -2.86085431, Change: -7.03
+2019-10-14 15:11:37.6057 TotalError: 0, Region: Barnet, London: True, Error: 0, Next: -5.122155351333332, Change: 0.85
+2019-10-14 15:11:38.3968 TotalError: 0, Region: Barnsley, London: False, Error: 0, Next: 2.9061661969999997, Change: 0.98
+2019-10-14 15:11:39.1076 TotalError: 0, Region: Barrow-in-Furness, London: False, Error: 0, Next: -0.5880352536666665, Change: 0.52
+2019-10-14 15:11:39.4627 TotalError: 0, Region: Basildon, London: False, Error: 0, Next: -1.8595529913333335, Change: 0.6
+2019-10-14 15:11:39.7636 TotalError: 0, Region: Basingstoke and Deane, London: False, Error: 0, Next: -8.316764878999999, Change: 1.93
+2019-10-14 15:11:40.5843 TotalError: 0, Region: Bassetlaw, London: False, Error: 0, Next: 2.693738117, Change: 1.12
+2019-10-14 15:11:40.9689 TotalError: 0, Region: Bath and North East Somerset, London: False, Error: 0, Next: -2.5041006833333332, Change: 0.89
+2019-10-14 15:11:41.3929 TotalError: 0, Region: Bedford, London: False, Error: 0, Next: -7.066150560333334, Change: 5.2
+2019-10-14 15:11:41.3929 TotalError: 0, Region: Belfast, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:11:41.6590 TotalError: 0, Region: Bexley, London: True, Error: 0, Next: -2.3465192913333333, Change: 1.23
+2019-10-14 15:11:41.9759 TotalError: 0, Region: Birmingham, London: False, Error: 0, Next: 2.3768675519999998, Change: 0.83
+2019-10-14 15:11:43.1684 TotalError: 0, Region: Blaby, London: False, Error: 0, Next: 3.47337609, Change: 195.04
+2019-10-14 15:11:43.5046 TotalError: 0, Region: Blackburn with Darwen, London: False, Error: 0, Next: 1.9882066913333334, Change: 2.12
+2019-10-14 15:11:43.8494 TotalError: 0, Region: Blackpool, London: False, Error: 0, Next: -1.6461957013333333, Change: 2.4
+2019-10-14 15:11:56.2619 TotalError: 0, Region: Blaenau Gwent, London: False, Error: 4.202789143751337E-10, Next: 9.808212717666668, Change: 1.48
+2019-10-14 15:11:56.6565 TotalError: 0, Region: Bolsover, London: False, Error: 0, Next: -3.505227025, Change: -1.31
+2019-10-14 15:11:56.9842 TotalError: 0, Region: Bolton, London: False, Error: 0, Next: 1.0787040906666665, Change: 0.88
+2019-10-14 15:12:09.3279 TotalError: 0, Region: Boston, London: False, Error: 2.250145632666295E-11, Next: 4.050199427666667, Change: 1.17
+2019-10-14 15:12:09.9383 TotalError: 0, Region: Bournemouth, London: False, Error: 0, Next: 0, Change: 0
+2019-10-14 15:12:11.5996 TotalError: 0, Region: Bracknell Forest, London: False, Error: 0, Next: -8.525291219333333, Change: 2.14
+2019-10-14 15:12:12.0515 TotalError: 0, Region: Bradford, London: False, Error: 0, Next: 1.6371829816666665, Change: 2.18
+2019-10-14 15:12:12.4611 TotalError: 0, Region: Braintree, London: False, Error: 0, Next: -0.9791860963333333, Change: 0.53
+2019-10-14 15:12:13.2946 TotalError: 0, Region: Breckland, London: False, Error: 0, Next: -0.7147143733333333, Change: 0.2
+2019-10-14 15:12:25.7256 TotalError: 0, Region: Brent, London: True, Error: 2.2158810232256554E-12, Next: -10.585868339666668, Change: 4.3
+2019-10-14 15:12:26.0310 TotalError: 0, Region: Brentwood, London: False, Error: 0, Next: 2.1515624096666666, Change: -6.69
+2019-10-14 15:12:26.5559 TotalError: 0, Region: Bridgend, London: False, Error: 0, Next: 1.8027610603333333, Change: 1.1
+2019-10-14 15:12:27.1253 TotalError: 0, Region: Brighton and Hove, London: False, Error: 0, Next: 0.050086402666666606, Change: 0.19
+2019-10-14 15:12:27.6046 TotalError: 0, Region: Broadland, London: False, Error: 0, Next: 0.9419411063333335, Change: 1.22
+2019-10-14 15:12:28.0372 TotalError: 0, Region: Bromley, London: True, Error: 0, Next: -1.1675041926666667, Change: 0.42
+2019-10-14 15:12:28.3909 TotalError: 0, Region: Bromsgrove, London: False, Error: 0, Next: 1.755973322, Change: 0.7
+2019-10-14 15:12:28.7960 TotalError: 0, Region: Broxbourne, London: False, Error: 0, Next: 1.3360999003333334, Change: -3.18
+2019-10-14 15:12:29.1061 TotalError: 0, Region: Broxtowe, London: False, Error: 0, Next: 4.164398727333334, Change: -15.87
+2019-10-14 15:12:29.5401 TotalError: 0, Region: Buckinghamshire, London: False, Error: 0, Next: -1.3142606733333333, Change: 16.58
+2019-10-14 15:12:41.3945 TotalError: 0, Region: Burnley, London: False, Error: 7.527096907324546E-11, Next: 3.666661132, Change: 0.52
+2019-10-14 15:12:41.7615 TotalError: 0, Region: Bury, London: False, Error: 0, Next: 3.3960298323333333, Change: 0.57
+2019-10-14 15:12:42.0660 TotalError: 0, Region: Caerphilly, London: False, Error: 0, Next: 6.377856419, Change: 1
+2019-10-14 15:12:42.4517 TotalError: 0, Region: Calderdale, London: False, Error: 0, Next: 4.8274542726666665, Change: 6.12
+2019-10-14 15:12:42.7517 TotalError: 0, Region: Cambridge, London: False, Error: 0, Next: -0.82423871, Change: 0.35
+2019-10-14 15:12:43.0192 TotalError: 0, Region: Cambridgeshire, London: False, Error: 0, Next: -0.6984829763333332, Change: 0.43
+2019-10-14 15:12:43.4997 TotalError: 0, Region: Camden, London: True, Error: 0, Next: 5.194010639333333, Change: -2.6
+2019-10-14 15:12:44.3733 TotalError: 0, Region: Cannock Chase, London: False, Error: 0, Next: 2.669181990666667, Change: 1.05
+2019-10-14 15:12:44.9076 TotalError: 0, Region: Canterbury, London: False, Error: 0, Next: -0.2207606936666667, Change: 0.5
+2019-10-14 15:12:45.3322 TotalError: 0, Region: Cardiff, London: False, Error: 0, Next: 0.012063508, Change: 0.01
+2019-10-14 15:12:57.2022 TotalError: 0, Region: Carlisle, London: False, Error: 2.869639312314026E-10, Next: -3.8851232726666667, Change: 15.07
+2019-10-14 15:13:09.1694 TotalError: 0, Region: Carmarthenshire, London: False, Error: 9.931271476288638E-15, Next: 0.7177215943333333, Change: 0.17
+2019-10-14 15:13:09.9763 TotalError: 0, Region: Castle Point, London: False, Error: 0, Next: -1.2545332263333333, Change: 2.42
+2019-10-14 15:13:09.9763 TotalError: 0, Region: Causeway Coast and Glens, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:13:10.3036 TotalError: 0, Region: Central Bedfordshire, London: False, Error: 0, Next: -4.001098911000001, Change: 1.1
+2019-10-14 15:13:10.8722 TotalError: 0, Region: Ceredigion, London: False, Error: 0, Next: 2.481710118, Change: -4.35
+2019-10-14 15:13:11.4393 TotalError: 0, Region: Charnwood, London: False, Error: 0, Next: 2.3229322616666668, Change: -1.23
+2019-10-14 15:13:11.9643 TotalError: 0, Region: Chelmsford, London: False, Error: 0, Next: 2.1159125736666664, Change: 0.75
+2019-10-14 15:13:12.1851 TotalError: 0, Region: Cheltenham, London: False, Error: 0, Next: 1.1836044166666666, Change: 0.56
+2019-10-14 15:13:13.3359 TotalError: 0, Region: Cherwell, London: False, Error: 0, Next: -6.692690529666667, Change: 1.18
+2019-10-14 15:13:13.7142 TotalError: 0, Region: Cheshire East, London: False, Error: 0, Next: 2.2012200473333334, Change: 1.27
+2019-10-14 15:13:25.4389 TotalError: 0, Region: Cheshire West and Chester, London: False, Error: 2.0094364208167569E-10, Next: 1.850209219, Change: 1.18
+2019-10-14 15:13:31.3868 TotalError: 0, Region: Chesterfield, London: False, Error: 0, Next: 1.8330551523333334, Change: 2.54
+2019-10-14 15:13:31.8156 TotalError: 0, Region: Chichester, London: False, Error: 0, Next: -2.249627565333333, Change: 0.74
+2019-10-14 15:13:32.0804 TotalError: 0, Region: Chiltern, London: False, Error: 0, Next: 0.36662437833333333, Change: 0.8
+2019-10-14 15:13:32.8213 TotalError: 0, Region: Chorley, London: False, Error: 0, Next: 1.1609950576666666, Change: -5.44
+2019-10-14 15:13:33.1963 TotalError: 0, Region: Christchurch, London: False, Error: 0, Next: 3.433218618, Change: 6
+2019-10-14 15:13:33.3420 TotalError: 0, Region: City of Aberdeen, London: False, Error: 0, Next: -7.719792636, Change: 1.34
+2019-10-14 15:13:44.7683 TotalError: 0, Region: City of Bristol, London: False, Error: 2.6175738855320733E-10, Next: -0.38468847199999995, Change: -4.82
+2019-10-14 15:13:56.9228 TotalError: 0, Region: City of Derby, London: False, Error: 9.32559551411602E-11, Next: 2.3242381706666664, Change: 0.97
+2019-10-14 15:13:57.1298 TotalError: 0, Region: City of Dundee, London: False, Error: 0, Next: 2.2422738423333333, Change: 1.92
+2019-10-14 15:13:57.7420 TotalError: 0, Region: City of Edinburgh, London: False, Error: 0, Next: 0.11760940066666666, Change: 0.04
+2019-10-14 15:13:58.0667 TotalError: 0, Region: City of Glasgow, London: False, Error: 0, Next: 1.0020286143333335, Change: 0.31
+2019-10-14 15:13:58.5194 TotalError: 0, Region: City of Kingston upon Hull, London: False, Error: 0, Next: 0.4768137986666667, Change: 1.09
+2019-10-14 15:13:58.9411 TotalError: 0, Region: City of London, London: False, Error: 0, Next: -5.052816582666666, Change: 1.85
+2019-10-14 15:13:59.2958 TotalError: 0, Region: City of Nottingham, London: False, Error: 0, Next: 1.5558595503333335, Change: 0.76
+2019-10-14 15:13:59.7000 TotalError: 0, Region: City of Peterborough, London: False, Error: 0, Next: 0.13231607099999998, Change: 0.05
+2019-10-14 15:13:59.9904 TotalError: 0, Region: City of Plymouth, London: False, Error: 0, Next: -0.9967136499999999, Change: -0.51
+2019-10-14 15:14:00.6333 TotalError: 0, Region: City of Westminster, London: False, Error: 0, Next: -4.917186799666666, Change: 24.97
+2019-10-14 15:14:00.7741 TotalError: 0, Region: Clackmannanshire, London: False, Error: 0, Next: 2.662018951, Change: 0.57
+2019-10-14 15:14:01.1256 TotalError: 0, Region: Colchester, London: False, Error: 0, Next: -2.1755426266666666, Change: 1.28
+2019-10-14 15:14:01.6022 TotalError: 0, Region: Conwy, London: False, Error: 0, Next: 1.1538186259999998, Change: 0.36
+2019-10-14 15:14:01.9896 TotalError: 0, Region: Copeland, London: False, Error: 0, Next: -4.084127063333334, Change: 1.53
+2019-10-14 15:14:02.3800 TotalError: 0, Region: Corby, London: False, Error: 0, Next: -2.703362313, Change: 6.73
+2019-10-14 15:14:13.8489 TotalError: 0, Region: Cornwall, London: False, Error: 2.794855798522832E-10, Next: 1.146230715, Change: 5.99
+2019-10-14 15:14:14.3034 TotalError: 0, Region: Cotswold, London: False, Error: 0, Next: 2.4632078186666666, Change: 0.35
+2019-10-14 15:14:14.6694 TotalError: 0, Region: County Durham, London: False, Error: 0, Next: -3.145321281333333, Change: -3.63
+2019-10-14 15:14:15.3600 TotalError: 0, Region: Coventry, London: False, Error: 0, Next: 3.1278682126666664, Change: 2.69
+2019-10-14 15:14:15.6732 TotalError: 0, Region: Craven, London: False, Error: 0, Next: 2.380740307, Change: 0.44
+2019-10-14 15:14:16.0280 TotalError: 0, Region: Crawley, London: False, Error: 0, Next: -1.2333811423333334, Change: 0.53
+2019-10-14 15:14:27.5415 TotalError: 0, Region: Croydon, London: True, Error: 3.8941047287735274E-11, Next: -3.6010246356666666, Change: 1
+2019-10-14 15:14:39.1926 TotalError: 0, Region: Cumbria, London: False, Error: 9.715830449588245E-10, Next: 0.9981254896666667, Change: 0.63
+2019-10-14 15:14:50.9393 TotalError: 0, Region: Dacorum, London: False, Error: 4.4643813869932523E-10, Next: -6.721424698333333, Change: 2.14
+2019-10-14 15:15:03.1725 TotalError: 0, Region: Darlington, London: False, Error: 1.9635780618606192E-10, Next: -2.321374258666667, Change: 0.57
+2019-10-14 15:15:03.4854 TotalError: 0, Region: Dartford, London: False, Error: 0, Next: 2.879039038666667, Change: 3.42
+2019-10-14 15:15:03.7650 TotalError: 0, Region: Daventry, London: False, Error: 0, Next: -12.921669485333334, Change: 4.41
+2019-10-14 15:15:04.1511 TotalError: 0, Region: Denbighshire, London: False, Error: 0, Next: 0.7201949500000001, Change: -2.78
+2019-10-14 15:15:16.0077 TotalError: 0, Region: Derbyshire, London: False, Error: 3.9322101217894093E-10, Next: 0.12128317500000001, Change: 0.07
+2019-10-14 15:15:16.2759 TotalError: 0, Region: Derbyshire Dales, London: False, Error: 0, Next: 1.352875319, Change: 0.17
+2019-10-14 15:15:16.2759 TotalError: 0, Region: Derry City and Strabane, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:15:16.5556 TotalError: 0, Region: Devon, London: False, Error: 0, Next: 1.5100270613333333, Change: 1.59
+2019-10-14 15:15:28.6917 TotalError: 0, Region: Doncaster, London: False, Error: 7.553875872992842E-11, Next: 2.4599774636666667, Change: 0.87
+2019-10-14 15:15:40.3419 TotalError: 0, Region: Dorset, London: False, Error: 2.2232579094826247E-10, Next: -0.8859531976666667, Change: 2.46
+2019-10-14 15:15:40.6014 TotalError: 0, Region: Dover, London: False, Error: 0, Next: 2.5771530976666663, Change: 1.11
+2019-10-14 15:15:41.0649 TotalError: 0, Region: Dudley, London: False, Error: 0, Next: 4.951932383333333, Change: 2.82
+2019-10-14 15:15:41.3686 TotalError: 0, Region: Dumfries and Galloway, London: False, Error: 0, Next: 3.5922965726666667, Change: -10.94
+2019-10-14 15:15:41.7483 TotalError: 0, Region: Ealing, London: True, Error: 0, Next: -1.7819270046666666, Change: 0.77
+2019-10-14 15:15:41.8870 TotalError: 0, Region: East Ayrshire, London: False, Error: 0, Next: 1.2293564206666665, Change: -0.47
+2019-10-14 15:15:42.2652 TotalError: 0, Region: East Cambridgeshire, London: False, Error: 0, Next: -2.829773216, Change: -2.62
+2019-10-14 15:15:43.9606 TotalError: 0, Region: East Devon, London: False, Error: 0, Next: 2.580351605, Change: -5.67
+2019-10-14 15:15:44.4220 TotalError: 0, Region: East Dorset, London: False, Error: 0, Next: -1.3577927016666667, Change: 0.71
+2019-10-14 15:15:44.6519 TotalError: 0, Region: East Dunbartonshire, London: False, Error: 0, Next: 2.478620084, Change: 0.78
+2019-10-14 15:15:45.4521 TotalError: 0, Region: East Hampshire, London: False, Error: 0, Next: -2.84808357, Change: 0.8
+2019-10-14 15:15:45.7038 TotalError: 0, Region: East Hertfordshire, London: False, Error: 0, Next: -2.8297860043333336, Change: 1.94
+2019-10-14 15:15:57.5675 TotalError: 0, Region: East Lindsey, London: False, Error: 1.3767499124565635E-10, Next: 1.4367400843333333, Change: 0.68
+2019-10-14 15:15:57.9410 TotalError: 0, Region: East Lothian, London: False, Error: 0, Next: -3.4962688896666663, Change: -9.26
+2019-10-14 15:15:58.6692 TotalError: 0, Region: East Midlands, London: False, Error: 0, Next: 0.8392511753333335, Change: 1.9
+2019-10-14 15:16:01.0806 TotalError: 0, Region: East Northamptonshire, London: False, Error: 0, Next: 3.2362129853333332, Change: 1.05
+2019-10-14 15:16:07.9524 TotalError: 0, Region: East Renfrewshire, London: False, Error: 3.488088661195099E-10, Next: 1.7212876430000001, Change: 1.11
+2019-10-14 15:16:20.5357 TotalError: 0, Region: East Riding of Yorkshire, London: False, Error: 1.4809861619428923E-09, Next: 0.3669275636666667, Change: 0.24
+2019-10-14 15:16:20.9245 TotalError: 0, Region: East Staffordshire, London: False, Error: 0, Next: -0.9183528116666668, Change: 1.17
+2019-10-14 15:16:21.2423 TotalError: 0, Region: East Sussex, London: False, Error: 0, Next: -0.835811069, Change: 7.95
+2019-10-14 15:16:34.2086 TotalError: 0, Region: East of England, London: False, Error: 5.1159580796811546E-11, Next: -0.951435515, Change: 0.88
+2019-10-14 15:16:34.7076 TotalError: 0, Region: Eastbourne, London: False, Error: 0, Next: -0.6274928433333333, Change: 0.78
+2019-10-14 15:16:35.2015 TotalError: 0, Region: Eastleigh, London: False, Error: 0, Next: 0.020417182333333325, Change: -0.04
+2019-10-14 15:16:35.6460 TotalError: 0, Region: Eden, London: False, Error: 0, Next: -3.162793955, Change: 3.79
+2019-10-14 15:16:35.9051 TotalError: 0, Region: Elmbridge, London: False, Error: 0, Next: -4.097417126666667, Change: 3.03
+2019-10-14 15:16:47.6909 TotalError: 0, Region: Enfield, London: True, Error: 4.251840015422756E-11, Next: -2.7450397743333332, Change: 1.17
+2019-10-14 15:17:10.0289 TotalError: 0, Region: England, London: False, Error: 1.3851593404386244E-10, Next: -0.9686217926666666, Change: 0.79
+2019-10-14 15:17:10.4064 TotalError: 0, Region: England and Wales, London: False, Error: 0, Next: -0.7051804203333334, Change: 0.62
+2019-10-14 15:17:10.7947 TotalError: 0, Region: Epping Forest, London: False, Error: 0, Next: -3.144562513666667, Change: 3.62
+2019-10-14 15:17:11.0817 TotalError: 0, Region: Epsom and Ewell, London: False, Error: 0, Next: -3.232475555666667, Change: 0.75
+2019-10-14 15:17:11.6556 TotalError: 0, Region: Erewash, London: False, Error: 0, Next: 1.2869670393333335, Change: 0.72
+2019-10-14 15:17:23.7905 TotalError: 0, Region: Essex, London: False, Error: 6.933070564408212E-11, Next: -1.2440360320000001, Change: 1.39
+2019-10-14 15:17:24.1676 TotalError: 0, Region: Exeter, London: False, Error: 0, Next: 0.45435052266666665, Change: 1.84
+2019-10-14 15:17:24.3246 TotalError: 0, Region: Falkirk, London: False, Error: 0, Next: 1.1871859503333333, Change: 3.11
+2019-10-14 15:17:24.6511 TotalError: 0, Region: Fareham, London: False, Error: 0, Next: -2.7748392823333337, Change: -2.05
+2019-10-14 15:17:36.6978 TotalError: 0, Region: Fenland, London: False, Error: 2.2174709368712103E-10, Next: 0.10818875133333332, Change: -0.07
+2019-10-14 15:17:36.6978 TotalError: 0, Region: Fermanagh and Omagh, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:17:36.9119 TotalError: 0, Region: Fife, London: False, Error: 0, Next: -2.0118773626666666, Change: 0.9
+2019-10-14 15:17:37.4653 TotalError: 0, Region: Flintshire, London: False, Error: 0, Next: -0.47748441, Change: -0.25
+2019-10-14 15:17:38.0148 TotalError: 0, Region: Folkestone and Hythe, London: False, Error: 0, Next: -1.6863183499999999, Change: 0.49
+2019-10-14 15:17:38.4124 TotalError: 0, Region: Forest Heath, London: False, Error: 0, Next: 5.149320360333333, Change: 0.88
+2019-10-14 15:17:39.1390 TotalError: 0, Region: Forest of Dean, London: False, Error: 0, Next: 3.452011202, Change: 0.71
+2019-10-14 15:17:39.4737 TotalError: 0, Region: Fylde, London: False, Error: 0, Next: -1.1404311036666668, Change: 0.27
+2019-10-14 15:17:39.7781 TotalError: 0, Region: Gateshead, London: False, Error: 0, Next: 3.309211048666667, Change: 3.65
+2019-10-14 15:17:52.0473 TotalError: 0, Region: Gedling, London: False, Error: 8.635934722204369E-10, Next: 1.4972512163333331, Change: 1.16
+2019-10-14 15:17:52.3226 TotalError: 0, Region: Gloucester, London: False, Error: 0, Next: 2.1287396006666666, Change: -1.34
+2019-10-14 15:17:52.6896 TotalError: 0, Region: Gloucestershire, London: False, Error: 0, Next: 0.8977385876666667, Change: 0.46
+2019-10-14 15:17:53.0134 TotalError: 0, Region: Gosport, London: False, Error: 0, Next: 0.6184633613333336, Change: 1.67
+2019-10-14 15:17:53.6207 TotalError: 0, Region: Gravesham, London: False, Error: 0, Next: -0.680311084, Change: 0.26
+2019-10-14 15:17:53.8988 TotalError: 0, Region: Great Britain, London: False, Error: 0, Next: 0.8938346226666667, Change: -1.16
+2019-10-14 15:17:54.2339 TotalError: 0, Region: Great Yarmouth, London: False, Error: 0, Next: 1.5317803186666665, Change: 0.66
+2019-10-14 15:17:54.5963 TotalError: 0, Region: Greater Manchester, London: False, Error: 0, Next: 3.1698126186666666, Change: 1.29
+2019-10-14 15:17:54.9289 TotalError: 0, Region: Greenwich, London: True, Error: 0, Next: 3.90464781, Change: -4.64
+2019-10-14 15:17:55.3014 TotalError: 0, Region: Guildford, London: False, Error: 0, Next: -3.885966375666667, Change: 1.96
+2019-10-14 15:18:07.7302 TotalError: 0, Region: Gwynedd, London: False, Error: 4.15807560186551E-13, Next: 2.0968890066666668, Change: 0.46
+2019-10-14 15:18:08.0632 TotalError: 0, Region: Hackney, London: True, Error: 0, Next: 0.258533281, Change: 0.05
+2019-10-14 15:18:08.3755 TotalError: 0, Region: Halton, London: False, Error: 0, Next: 4.753492915, Change: 0.73
+2019-10-14 15:18:08.8472 TotalError: 0, Region: Hambleton, London: False, Error: 0, Next: -1.54444551, Change: 4.58
+2019-10-14 15:18:21.5525 TotalError: 0, Region: Hammersmith and Fulham, London: True, Error: 7.851616328675154E-11, Next: -0.9069890283333333, Change: 13.61
+2019-10-14 15:18:33.0619 TotalError: 0, Region: Hampshire, London: False, Error: 5.513279117583794E-11, Next: -2.4338611863333335, Change: 1.07
+2019-10-14 15:18:33.5415 TotalError: 0, Region: Harborough, London: False, Error: 0, Next: 4.139557916666667, Change: 1.35
+2019-10-14 15:18:33.9269 TotalError: 0, Region: Haringey, London: True, Error: 0, Next: -1.193810733, Change: 0.43
+2019-10-14 15:18:34.4055 TotalError: 0, Region: Harlow, London: False, Error: 0, Next: -1.6521899063333334, Change: 0.38
+2019-10-14 15:18:34.7646 TotalError: 0, Region: Harrogate, London: False, Error: 0, Next: 0.7851009783333334, Change: -0.21
+2019-10-14 15:18:35.1888 TotalError: 0, Region: Harrow, London: True, Error: 0, Next: -0.7727046756666667, Change: 0.18
+2019-10-14 15:18:35.6632 TotalError: 0, Region: Hart, London: False, Error: 0, Next: 0.5385785046666666, Change: -0.7
+2019-10-14 15:18:36.0897 TotalError: 0, Region: Hartlepool, London: False, Error: 0, Next: 0.5496178863333333, Change: 3.63
+2019-10-14 15:18:36.9582 TotalError: 0, Region: Hastings, London: False, Error: 0, Next: 1.724241246, Change: 1.87
+2019-10-14 15:18:37.2446 TotalError: 0, Region: Havant, London: False, Error: 0, Next: 0.9037545746666665, Change: -0.3
+2019-10-14 15:18:37.5786 TotalError: 0, Region: Havering, London: True, Error: 0, Next: -1.224512931, Change: 0.29
+2019-10-14 15:18:37.9337 TotalError: 0, Region: Herefordshire, London: False, Error: 0, Next: -0.6988493913333333, Change: 0.37
+2019-10-14 15:18:38.6611 TotalError: 0, Region: Hertfordshire, London: False, Error: 0, Next: -0.4823764953333334, Change: 0.25
+2019-10-14 15:18:39.0741 TotalError: 0, Region: Hertsmere, London: False, Error: 0, Next: -3.793616719333333, Change: 1.85
+2019-10-14 15:18:51.2222 TotalError: 0, Region: High Peak, London: False, Error: 2.1042514509462597E-10, Next: -1.6816173813333333, Change: -1.71
+2019-10-14 15:18:51.5267 TotalError: 0, Region: Highland, London: False, Error: 0, Next: 4.168622648333333, Change: 1.03
+2019-10-14 15:18:51.7662 TotalError: 0, Region: Hillingdon, London: True, Error: 0, Next: -2.131707336, Change: 0.62
+2019-10-14 15:18:52.3981 TotalError: 0, Region: Hinckley and Bosworth, London: False, Error: 0, Next: -0.31060311133333335, Change: -1.09
+2019-10-14 15:18:52.7684 TotalError: 0, Region: Horsham, London: False, Error: 0, Next: -3.101698903666667, Change: 1.15
+2019-10-14 15:19:01.1166 TotalError: 0, Region: Hounslow, London: True, Error: 0, Next: -4.028057231333333, Change: -3.5
+2019-10-14 15:19:12.9591 TotalError: 0, Region: Huntingdonshire, London: False, Error: 3.148798436448012E-10, Next: 2.5434488493333336, Change: -7.99
+2019-10-14 15:19:13.3684 TotalError: 0, Region: Hyndburn, London: False, Error: 0, Next: -4.389948606, Change: 2.08
+2019-10-14 15:19:14.0003 TotalError: 0, Region: Inner London, London: False, Error: 0, Next: -0.3496997066666667, Change: 0.12
+2019-10-14 15:19:14.1753 TotalError: 0, Region: Inverclyde, London: False, Error: 0, Next: -1.59260717, Change: -1.81
+2019-10-14 15:19:15.4053 TotalError: 0, Region: Ipswich, London: False, Error: 0, Next: -4.196565107666667, Change: -31.84
+2019-10-14 15:19:15.6892 TotalError: 0, Region: Isle of Anglesey, London: False, Error: 0, Next: 4.666981281999999, Change: 1.3
+2019-10-14 15:19:16.1311 TotalError: 0, Region: Isle of Wight, London: False, Error: 0, Next: -0.7554200003333333, Change: -0.3
+2019-10-14 15:19:16.3609 TotalError: 0, Region: Islington, London: True, Error: 0, Next: -0.755059952, Change: 0.23
+2019-10-14 15:19:28.7710 TotalError: 0, Region: Kensington And Chelsea, London: False, Error: 6.626523538253602E-10, Next: -4.216021043333334, Change: 1.08
+2019-10-14 15:19:40.2482 TotalError: 0, Region: Kent, London: False, Error: 2.9499114743556793E-10, Next: -0.620681927, Change: 0.45
+2019-10-14 15:19:52.1239 TotalError: 0, Region: Kettering, London: False, Error: 1.9026309484883133E-10, Next: -2.3338714763333335, Change: 2.08
+2019-10-14 15:19:52.4352 TotalError: 0, Region: King's Lynn and West Norfolk , London: False, Error: 0, Next: 0.18747884366666667, Change: 0.08
+2019-10-14 15:19:52.8539 TotalError: 0, Region: Kingston upon Thames, London: True, Error: 0, Next: -1.3876254903333336, Change: 0.23
+2019-10-14 15:19:53.1262 TotalError: 0, Region: Kirklees, London: False, Error: 0, Next: 0.17419388066666666, Change: -0.42
+2019-10-14 15:20:05.1174 TotalError: 0, Region: Knowsley, London: False, Error: 7.237131604312732E-10, Next: -1.7906742913333336, Change: 0.82
+2019-10-14 15:20:17.2251 TotalError: 0, Region: Lambeth, London: True, Error: 3.143401306700709E-12, Next: 0, Change: -0
+2019-10-14 15:20:17.5034 TotalError: 0, Region: Lancashire, London: False, Error: 0, Next: -1.4385177550000001, Change: 1.07
+2019-10-14 15:20:20.1963 TotalError: 0, Region: Lancaster, London: False, Error: 0, Next: 2.096282644, Change: 2.79
+2019-10-14 15:20:27.0375 TotalError: 0, Region: Leeds, London: False, Error: 0, Next: 0.298483791, Change: 0.37
+2019-10-14 15:20:27.4174 TotalError: 0, Region: Leicester, London: False, Error: 0, Next: 4.634600531, Change: 1.77
+2019-10-14 15:20:39.1575 TotalError: 0, Region: Leicestershire, London: False, Error: 9.272248286550899E-10, Next: 1.2942007273333334, Change: -3.87
+2019-10-14 15:20:39.4692 TotalError: 0, Region: Lewes, London: False, Error: 0, Next: -1.9699978596666663, Change: 0.74
+2019-10-14 15:20:39.6984 TotalError: 0, Region: Lewisham, London: True, Error: 0, Next: -2.2589648199999997, Change: 0.89
+2019-10-14 15:20:51.9266 TotalError: 0, Region: Lichfield, London: False, Error: 1.0224907006115027E-11, Next: -5.068756155333333, Change: 1.88
+2019-10-14 15:20:52.2617 TotalError: 0, Region: Lincoln, London: False, Error: 0, Next: 1.6278957853333333, Change: 0.75
+2019-10-14 15:20:52.6010 TotalError: 0, Region: Lincolnshire, London: False, Error: 0, Next: 0.6107284563333334, Change: 1
+2019-10-14 15:20:52.6010 TotalError: 0, Region: Lisburn and Castlereagh, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:21:04.6475 TotalError: 0, Region: Liverpool, London: False, Error: 9.275565163899119E-10, Next: -0.8578958160000001, Change: -0.24
+2019-10-14 15:21:05.9871 TotalError: 0, Region: London, London: False, Error: 0, Next: 0, Change: -0
+2019-10-14 15:21:17.7694 TotalError: 0, Region: Luton, London: False, Error: 6.574609973705968E-13, Next: -1.2726243106666666, Change: 0.44
+2019-10-14 15:21:18.0909 TotalError: 0, Region: Maidstone, London: False, Error: 0, Next: -0.29329962800000003, Change: 0.1
+2019-10-14 15:21:24.2469 TotalError: 0, Region: Maldon, London: False, Error: 0, Next: 0.4240773846666666, Change: -0.8
+2019-10-14 15:21:24.5796 TotalError: 0, Region: Malvern Hills, London: False, Error: 0, Next: 6.121934780666667, Change: 2.54
+2019-10-14 15:21:25.0172 TotalError: 0, Region: Manchester, London: False, Error: 0, Next: 0, Change: 0
+2019-10-14 15:21:26.1198 TotalError: 0, Region: Mansfield, London: False, Error: 0, Next: 1.5170307533333336, Change: 0.71
+2019-10-14 15:21:37.7381 TotalError: 0, Region: Medway, London: False, Error: 3.6443753869660664E-10, Next: -1.3186474793333334, Change: 0.62
+2019-10-14 15:21:38.0514 TotalError: 0, Region: Melton, London: False, Error: 0, Next: 1.2819877066666667, Change: 2.39
+2019-10-14 15:21:38.4552 TotalError: 0, Region: Mendip, London: False, Error: 0, Next: 0.4097477153333333, Change: -0.22
+2019-10-14 15:21:49.7531 TotalError: 0, Region: Merseyside, London: False, Error: 1.788796575856193E-11, Next: -0.19472492, Change: -0.07
+2019-10-14 15:21:50.2422 TotalError: 0, Region: Merthyr Tydfil, London: False, Error: 0, Next: 10.113925625333335, Change: 1.27
+2019-10-14 15:22:02.9484 TotalError: 0, Region: Merton, London: True, Error: 1.8780591217487064E-11, Next: -4.000195421666667, Change: 2.16
+2019-10-14 15:22:03.4183 TotalError: 0, Region: Mid Devon, London: False, Error: 0, Next: -2.376639895, Change: 1.42
+2019-10-14 15:22:03.8607 TotalError: 0, Region: Mid Suffolk, London: False, Error: 0, Next: -4.131629023, Change: 2.04
+2019-10-14 15:22:04.4089 TotalError: 0, Region: Mid Sussex, London: False, Error: 0, Next: -1.6118935816666669, Change: -11.6
+2019-10-14 15:22:04.4143 TotalError: 0, Region: Mid Ulster, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:22:04.4143 TotalError: 0, Region: Mid and East Antrim, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:22:17.2514 TotalError: 0, Region: Middlesbrough, London: False, Error: 2.627668518139869E-12, Next: -6.224908622333333, Change: 16.53
+2019-10-14 15:22:17.5375 TotalError: 0, Region: Midlothian, London: False, Error: 0, Next: 3.4093812393333334, Change: 0.87
+2019-10-14 15:22:17.8867 TotalError: 0, Region: Milton Keynes, London: False, Error: 0, Next: -5.083582580333334, Change: 1.02
+2019-10-14 15:22:18.1582 TotalError: 0, Region: Mole Valley, London: False, Error: 0, Next: -9.785228832333333, Change: 1.37
+2019-10-14 15:22:18.4274 TotalError: 0, Region: Monmouthshire, London: False, Error: 0, Next: 6.532639487, Change: 0.79
+2019-10-14 15:22:18.8445 TotalError: 0, Region: Moray, London: False, Error: 0, Next: -1.0717411056666666, Change: -5.33
+2019-10-14 15:22:19.0726 TotalError: 0, Region: Na h-Eileanan Siar, London: False, Error: 0, Next: 7.332712189666666, Change: 0.86
+2019-10-14 15:22:19.3904 TotalError: 0, Region: Neath Port Talbot, London: False, Error: 0, Next: 3.716611605666667, Change: 0.93
+2019-10-14 15:22:19.6682 TotalError: 0, Region: New Forest, London: False, Error: 0, Next: -4.696485006, Change: 1.48
+2019-10-14 15:22:19.9108 TotalError: 0, Region: Newark and Sherwood, London: False, Error: 0, Next: 1.9378615929999998, Change: -3.42
+2019-10-14 15:22:20.2881 TotalError: 0, Region: Newcastle upon Tyne, London: False, Error: 0, Next: -0.12278991566666668, Change: 0.03
+2019-10-14 15:22:20.6773 TotalError: 0, Region: Newcastle-under-Lyme, London: False, Error: 0, Next: 1.186053399666667, Change: -4.58
+2019-10-14 15:22:20.9637 TotalError: 0, Region: Newham, London: True, Error: 0, Next: -10.452251176999999, Change: 28.9
+2019-10-14 15:22:21.6453 TotalError: 0, Region: Newport, London: False, Error: 0, Next: 3.3480218290000003, Change: 0.73
+2019-10-14 15:22:21.6508 TotalError: 0, Region: Newry Mourne and Down, London: False, Error: 0, Next: 0, Change: NaN
+2019-10-14 15:22:33.5748 TotalError: 0, Region: Norfolk, London: False, Error: 1.4009406759846165E-11, Next: 0.8624763703333334, Change: 1.06
+2019-10-14 15:22:33.7474 TotalError: 0, Region: North Ayrshire, London: False, Error: 0, Next: -0.1394940336666667, Change: -0.03
+2019-10-14 15:22:39.1048 TotalError: 0, Region: North Devon, London: False, Error: 0, Next: 10.526518717666667, Change: 1.09
+2019-10-14 15:22:39.5739 TotalError: 0, Region: North Dorset, London: False, Error: 0, Next: -4.426525316, Change: 1
+2019-10-14 15:22:52.9825 TotalError: 0, Region: North East, London: False, Error: 2.8855942730507825E-12, Next: -1.114544242, Change: 0.84
+2019-10-14 15:23:05.0165 TotalError: 0, Region: North East Derbyshire, London: False, Error: 6.668305361076176E-11, Next: 2.020511936, Change: 1.52
+2019-10-14 15:23:18.0420 TotalError: 0, Region: North East Lincolnshire, London: False, Error: 1.6306929652099839E-09, Next: -0.23469752066666683, Change: -0.1
+2019-10-14 15:23:18.8192 TotalError: 0, Region: North Hertfordshire, London: False, Error: 0, Next: -5.304878454, Change: 0.96
+2019-10-14 15:23:30.8039 TotalError: 0, Region: North Kesteven, London: False, Error: 9.390081412300889E-11, Next: -1.209583213, Change: -0.82
+2019-10-14 15:23:31.0313 TotalError: 0, Region: North Lanarkshire, London: False, Error: 0, Next: -2.099993803, Change: 2.88
+2019-10-14 15:23:31.4625 TotalError: 0, Region: North Lincolnshire, London: False, Error: 0, Next: 2.110528142333333, Change: 1.2
+2019-10-14 15:23:31.7413 TotalError: 0, Region: North Norfolk, London: False, Error: 0, Next: 2.300712278666667, Change: -4.2
+2019-10-14 15:23:43.5154 TotalError: 0, Region: North Somerset, London: False, Error: 1.0402372374511896E-09, Next: -0.8217981633333333, Change: 3.64
+2019-10-14 15:23:43.8315 TotalError: 0, Region: North Tyneside, London: False, Error: 0, Next: 2.9036522436666665, Change: -3.03
+2019-10-14 15:23:44.1761 TotalError: 0, Region: North Warwickshire, London: False, Error: 0, Next: -3.780735724, Change: -2.37
+2019-10-14 15:23:44.4253 TotalError: 0, Region: North West, London: False, Error: 0, Next: 2.520758304333333, Change: 1.57
+2019-10-14 15:23:44.6716 TotalError: 0, Region: North West Leicestershire, London: False, Error: 0, Next: -0.4247962376666667, Change: 16.56
+2019-10-14 15:23:45.7084 TotalError: 0, Region: North Yorkshire, London: False, Error: 0, Next: -0.914439647, Change: 0.8
+2019-10-14 15:23:56.8205 TotalError: 0, Region: Northampton, London: False, Error: 6.62548081569074E-10, Next: -3.163044774, Change: 2.02
+2019-10-14 15:23:57.3861 TotalError: 0, Region: Northamptonshire, London: False, Error: 0, Next: -2.2571038056666666, Change: 1.81
+2019-10-14 15:24:10.6557 TotalError: 0, Region: Northern Ireland, London: False, Error: 1.0745410871165466, Next: 0, Change: 0
+2019-10-14 15:24:10.9467 TotalError: 0, Region: Northumberland, London: False, Error: 0, Next: -4.753564052333333, Change: 0.82
+2019-10-14 15:24:11.2338 TotalError: 0, Region: Norwich, London: False, Error: 0, Next: -0.0016202476666666483, Change: -0
+2019-10-14 15:24:22.9964 TotalError: 0, Region: Nottinghamshire, London: False, Error: 2.333792926784643E-10, Next: 2.274441393, Change: 2.94
+2019-10-14 15:24:23.3138 TotalError: 0, Region: Nuneaton and Bedworth, London: False, Error: 0, Next: 1.8406460676666665, Change: 4.48
+2019-10-14 15:24:26.1900 TotalError: 0, Region: Oadby and Wigston, London: False, Error: 0, Next: 0.4255646473333334, Change: 0.9
+2019-10-14 15:24:37.9429 TotalError: 0, Region: Oldham, London: False, Error: 5.2671724002567715E-11, Next: 2.36137936, Change: 0.55
+2019-10-14 15:24:38.1120 TotalError: 0, Region: Orkney Islands, London: False, Error: 0, Next: 1.5965488063333335, Change: 0.86
+2019-10-14 15:24:49.1559 TotalError: 0, Region: Outer London, London: False, Error: 7.230772579766666E-05, Next: -2.6760851393333334, Change: 1.01
+2019-10-14 15:24:49.5851 TotalError: 0, Region: Oxford, London: False, Error: 0, Next: -2.702802539, Change: 1.16
+2019-10-14 15:24:50.7805 TotalError: 0, Region: Oxfordshire, London: False, Error: 0, Next: -5.276960835000001, Change: 1.58
+2019-10-14 15:24:51.1974 TotalError: 0, Region: Pembrokeshire, London: False, Error: 0, Next: 4.051156035, Change: 1.2
+2019-10-14 15:24:51.6627 TotalError: 0, Region: Pendle, London: False, Error: 0, Next: -2.1659889833333335, Change: 0.75
+2019-10-14 15:24:52.0047 TotalError: 0, Region: Perth and Kinross, London: False, Error: 0, Next: 0.6424896920000001, Change: 0.18
+2019-10-14 15:24:52.3629 TotalError: 0, Region: Poole, London: False, Error: 0, Next: -0.8877788649999999, Change: 0.51
+2019-10-14 15:24:52.7262 TotalError: 0, Region: Portsmouth, London: False, Error: 0, Next: -1.3764444653333332, Change: 2.76
+2019-10-14 15:24:53.2873 TotalError: 0, Region: Powys, London: False, Error: 0, Next: 0.5200288350000001, Change: 0.47
+2019-10-14 15:24:53.6202 TotalError: 0, Region: Preston, London: False, Error: 0, Next: -3.6935863543333336, Change: 1.92
+2019-10-14 15:24:53.9966 TotalError: 0, Region: Purbeck, London: False, Error: 0, Next: -0.20949681100000003, Change: -0.05
+2019-10-14 15:24:54.6256 TotalError: 0, Region: Reading, London: False, Error: 0, Next: -4.146987488333333, Change: 0.81
+2019-10-14 15:24:54.9160 TotalError: 0, Region: Redbridge, London: True, Error: 0, Next: -2.5294095596666666, Change: 0.96
+2019-10-14 15:24:55.2100 TotalError: 0, Region: Redcar and Cleveland, London: False, Error: 0, Next: -3.4279585113333333, Change: 3.51
+2019-10-14 15:24:55.5586 TotalError: 0, Region: Redditch, London: False, Error: 0, Next: 0.39682603200000005, Change: 0.29
+2019-10-14 15:25:07.2392 TotalError: 0, Region: Reigate and Banstead, London: False, Error: 5.829314529278098E-10, Next: -3.0775131360000003, Change: 1.48
+2019-10-14 15:25:07.5250 TotalError: 0, Region: Renfrewshire, London: False, Error: 0, Next: -1.570210793, Change: -4.78
+2019-10-14 15:25:08.1786 TotalError: 0, Region: Rhondda Cynon Taf, London: False, Error: 0, Next: -1.251274489, Change: -0.31
+2019-10-14 15:25:08.4696 TotalError: 0, Region: Ribble Valley, London: False, Error: 0, Next: -1.6806485899999999, Change: 0.37
+2019-10-14 15:25:20.3737 TotalError: 0, Region: Richmond upon Thames, London: True, Error: 1.0428985041611452E-09, Next: 1.2609429496666666, Change: -0.79
+2019-10-14 15:25:20.7752 TotalError: 0, Region: Richmondshire, London: False, Error: 0, Next: 3.613690946, Change: -297.89
+2019-10-14 15:25:21.1730 TotalError: 0, Region: Rochdale, London: False, Error: 0, Next: 7.720950191999999, Change: 1.64
+2019-10-14 15:25:21.6666 TotalError: 0, Region: Rochford, London: False, Error: 0, Next: -0.46600025166666664, Change: -0.19
+2019-10-14 15:25:21.9783 TotalError: 0, Region: Rossendale, London: False, Error: 0, Next: 2.039803022333333, Change: 0.53
+2019-10-14 15:25:22.4434 TotalError: 0, Region: Rother, London: False, Error: 0, Next: -2.1710309999999997, Change: -7.56
+2019-10-14 15:25:22.9121 TotalError: 0, Region: Rotherham, London: False, Error: 0, Next: 2.8795579166666663, Change: 1.49
+2019-10-14 15:25:23.2024 TotalError: 0, Region: Rugby, London: False, Error: 0, Next: -0.444759647, Change: 1.94
+2019-10-14 15:25:23.7312 TotalError: 0, Region: Runnymede, London: False, Error: 0, Next: -3.1737460036666665, Change: 1.43
+2019-10-14 15:25:24.1334 TotalError: 0, Region: Rushcliffe, London: False, Error: 0, Next: 5.437658345999999, Change: 2.99
+2019-10-14 15:25:25.2157 TotalError: 0, Region: Rushmoor, London: False, Error: 0, Next: -8.948513993333334, Change: 1.66
+2019-10-14 15:25:25.4827 TotalError: 0, Region: Rutland, London: False, Error: 0, Next: 0.685915086, Change: -0.66
+2019-10-14 15:25:25.7227 TotalError: 0, Region: Ryedale, London: False, Error: 0, Next: 0.056836865333333396, Change: -0.03
+2019-10-14 15:25:26.8823 TotalError: 0, Region: Salford, London: False, Error: 0, Next: 10.313418217, Change: 11.77
+2019-10-14 15:25:27.6012 TotalError: 0, Region: Sandwell, London: False, Error: 0, Next: 3.7391461823333336, Change: 3.4
+2019-10-14 15:25:27.9730 TotalError: 0, Region: Scarborough, London: False, Error: 0, Next: 0.8218619340000001, Change: 7.87
+2019-10-14 15:25:47.8817 TotalError: 0, Region: Scotland, London: False, Error: 1.5070433609353058E-11, Next: 1.095430929, Change: 1.19
+2019-10-14 15:25:48.3316 TotalError: 0, Region: Scottish Borders, London: False, Error: 0, Next: -2.0135457310000002, Change: 1.55
+2019-10-14 15:25:48.6454 TotalError: 0, Region: Sedgemoor, London: False, Error: 0, Next: -0.3989134783333334, Change: -0.7
+2019-10-14 15:25:53.7038 TotalError: 0, Region: Sefton, London: False, Error: 0, Next: 4.119861699, Change: 1.25
+2019-10-14 15:25:54.0313 TotalError: 0, Region: Selby, London: False, Error: 0, Next: -1.9253602249999997, Change: 3.94
+2019-10-14 15:25:54.4180 TotalError: 0, Region: Sevenoaks, London: False, Error: 0, Next: 2.329070223, Change: 1.34
+2019-10-14 15:26:07.4586 TotalError: 0, Region: Sheffield, London: False, Error: 7.743156330709913E-10, Next: 1.6212121866666667, Change: 1.85
+2019-10-14 15:26:07.6989 TotalError: 0, Region: Shetland Islands, London: False, Error: 0, Next: 2.272542274333333, Change: -0.17
+2019-10-14 15:26:08.0242 TotalError: 0, Region: Shropshire, London: False, Error: 0, Next: -0.33832960966666664, Change: -0.18
+2019-10-14 15:26:08.2553 TotalError: 0, Region: Slough, London: False, Error: 0, Next: -0.7914055160000001, Change: 0.18
+2019-10-14 15:26:20.4060 TotalError: 0, Region: Solihull, London: False, Error: 6.803676101473993E-12, Next: -0.6833882536666667, Change: -0.52
+2019-10-14 15:26:20.7321 TotalError: 0, Region: Somerset, London: False, Error: 0, Next: 0.6005985876666666, Change: -3.11
+2019-10-14 15:26:20.8886 TotalError: 0, Region: South Ayrshire, London: False, Error: 0, Next: -4.3364190670000005, Change: 0.95
+2019-10-14 15:26:21.2747 TotalError: 0, Region: South Bucks, London: False, Error: 0, Next: -3.3599705456666666, Change: 1.87
+2019-10-14 15:26:21.8625 TotalError: 0, Region: South Cambridgeshire, London: False, Error: 0, Next: -1.010705172, Change: 0.32
+2019-10-14 15:26:22.4916 TotalError: 0, Region: South Derbyshire, London: False, Error: 0, Next: -3.0643528900000003, Change: 1.3
+2019-10-14 15:26:22.9647 TotalError: 0, Region: South East, London: False, Error: 0, Next: -1.658932592, Change: 0.88
+2019-10-14 15:26:35.1223 TotalError: 0, Region: South Gloucestershire, London: False, Error: 3.8425317962979593E-10, Next: 0.24539834333333332, Change: -0.47
+2019-10-14 15:26:47.0899 TotalError: 0, Region: South Hams, London: False, Error: 3.9782119171578234E-10, Next: 0.7270599166666664, Change: -0.79
+2019-10-14 15:26:47.4462 TotalError: 0, Region: South Holland, London: False, Error: 0, Next: -1.7255075573333334, Change: 5.19
+2019-10-14 15:26:47.8289 TotalError: 0, Region: South Kesteven, London: False, Error: 0, Next: -0.636958497, Change: 0.54
+2019-10-14 15:26:59.6104 TotalError: 0, Region: South Lakeland, London: False, Error: 2.686850323001276E-12, Next: 6.333610759, Change: 1.28
+2019-10-14 15:26:59.7877 TotalError: 0, Region: South Lanarkshire, London: False, Error: 0, Next: 0.08719744533333333, Change: 0.29
+2019-10-14 15:27:00.1675 TotalError: 0, Region: South Norfolk, London: False, Error: 0, Next: 0.289865798, Change: 0.28
+2019-10-14 15:27:00.7406 TotalError: 0, Region: South Northamptonshire, London: False, Error: 0, Next: -1.568359571, Change: 0.48
+2019-10-14 15:27:01.2261 TotalError: 0, Region: South Oxfordshire, London: False, Error: 0, Next: -3.0161240176666673, Change: 2.5
+2019-10-14 15:27:18.2095 TotalError: 0, Region: South Ribble, London: False, Error: 8.645952851044705E-11, Next: -2.165779458, Change: 15.9
+2019-10-14 15:27:18.8549 TotalError: 0, Region: South Somerset, London: False, Error: 0, Next: 2.921158326333334, Change: -15.42
+2019-10-14 15:27:19.1700 TotalError: 0, Region: South Staffordshire, London: False, Error: 0, Next: -1.1432143933333332, Change: 0.52
+2019-10-14 15:27:19.8625 TotalError: 0, Region: South Tyneside, London: False, Error: 0, Next: -2.2972649196666666, Change: -0.63
+2019-10-14 15:27:21.0556 TotalError: 0, Region: South West, London: False, Error: 0, Next: 0.14396884433333332, Change: -0.2
+2019-10-14 15:27:21.6152 TotalError: 0, Region: South Yorkshire, London: False, Error: 0, Next: 3.2943505796666663, Change: 2.07
+2019-10-14 15:27:22.3832 TotalError: 0, Region: Southampton, London: False, Error: 0, Next: -2.7236116533333337, Change: 1.75
+2019-10-14 15:27:22.9713 TotalError: 0, Region: Southend-on-Sea, London: False, Error: 0, Next: 0.08570928533333337, Change: -0.89
+2019-10-14 15:27:24.0929 TotalError: 0, Region: Southwark, London: True, Error: 0, Next: -2.2765338723333333, Change: 0.65
+2019-10-14 15:27:42.8778 TotalError: 0, Region: Spelthorne, London: False, Error: 1.1268873018648636E-09, Next: -1.2527418133333332, Change: 0.36
+2019-10-14 15:27:54.7644 TotalError: 0, Region: St Albans, London: False, Error: 5.993978662167961E-10, Next: 0.27225627366666666, Change: -0.08
+2019-10-14 15:28:06.7647 TotalError: 0, Region: St Edmundsbury, London: False, Error: 9.522697366837214E-10, Next: -1.8224319973333334, Change: 1.54
+2019-10-14 15:28:07.3188 TotalError: 0, Region: St Helens, London: False, Error: 0, Next: -2.2604719153333335, Change: -13.88
+2019-10-14 15:28:07.6998 TotalError: 0, Region: Stafford, London: False, Error: 0, Next: 4.084485501333334, Change: 0.97
+2019-10-14 15:28:08.8251 TotalError: 0, Region: Staffordshire, London: False, Error: 0, Next: -1.4453739563333334, Change: -358.11
+2019-10-14 15:28:09.2392 TotalError: 0, Region: Staffordshire Moorlands, London: False, Error: 0, Next: 1.658201182, Change: 0.92
+2019-10-14 15:28:09.5187 TotalError: 0, Region: Stevenage, London: False, Error: 0, Next: 6.041130607666666, Change: 3.11
+2019-10-14 15:28:09.7455 TotalError: 0, Region: Stirling, London: False, Error: 0, Next: 5.027125628333333, Change: 0.87
+2019-10-14 15:28:12.3980 TotalError: 0, Region: Stockport, London: False, Error: 0, Next: 2.0390729833333334, Change: 0.76
+2019-10-14 15:28:12.6981 TotalError: 0, Region: Stockton-on-Tees, London: False, Error: 0, Next: -0.43982233733333337, Change: 0.25
+2019-10-14 15:28:13.3879 TotalError: 0, Region: Stoke-on-Trent, London: False, Error: 0, Next: 2.208892317, Change: 0.78
+2019-10-14 15:28:13.7074 TotalError: 0, Region: Stratford-on-Avon, London: False, Error: 0, Next: -4.926396936333333, Change: 3.9
+2019-10-14 15:28:14.0457 TotalError: 0, Region: Stroud, London: False, Error: 0, Next: 3.6051728473333333, Change: 1.73
+2019-10-14 15:28:14.3650 TotalError: 0, Region: Suffolk, London: False, Error: 0, Next: -0.9065235613333334, Change: 8.98
+2019-10-14 15:28:26.2869 TotalError: 0, Region: Suffolk Coastal, London: False, Error: 7.525338197017157E-12, Next: -1.5856209006666664, Change: 0.95
+2019-10-14 15:28:38.2589 TotalError: 0, Region: Sunderland, London: False, Error: 2.9187777204234416E-10, Next: 0.34788417833333335, Change: -0.24
+2019-10-14 15:28:38.5413 TotalError: 0, Region: Surrey, London: False, Error: 0, Next: -4.434941281666666, Change: 1.39
+2019-10-14 15:28:38.8094 TotalError: 0, Region: Surrey Heath, London: False, Error: 0, Next: -1.8361392460000001, Change: 1.89
+2019-10-14 15:28:39.3019 TotalError: 0, Region: Sutton, London: True, Error: 0, Next: -3.159568443, Change: 1.22
+2019-10-14 15:28:41.1518 TotalError: 0, Region: Swale, London: False, Error: 0, Next: -2.5562903843333333, Change: 0.89
+2019-10-14 15:28:41.8226 TotalError: 0, Region: Swansea, London: False, Error: 0, Next: 2.1229764753333336, Change: 2.1
+2019-10-14 15:28:42.1547 TotalError: 0, Region: Swindon, London: False, Error: 0, Next: -3.455081524666666, Change: 2.2
+2019-10-14 15:28:43.6097 TotalError: 0, Region: Tameside, London: False, Error: 0, Next: 2.3226151956666667, Change: 1.42
+2019-10-14 15:28:44.1358 TotalError: 0, Region: Tamworth, London: False, Error: 0, Next: -1.0846400846666666, Change: 3.25
+2019-10-14 15:28:44.4727 TotalError: 0, Region: Tandridge, London: False, Error: 0, Next: -10.116288607, Change: 1.66
+2019-10-14 15:28:44.8286 TotalError: 0, Region: Taunton Deane, London: False, Error: 0, Next: 2.269190860666667, Change: -2.3
+2019-10-14 15:28:45.1057 TotalError: 0, Region: Teignbridge, London: False, Error: 0, Next: -3.6171030883333333, Change: 3.71
+2019-10-14 15:28:56.7742 TotalError: 0, Region: Telford and Wrekin, London: False, Error: 8.211520969341072E-11, Next: -2.9624185376666667, Change: -2.27
+2019-10-14 15:28:57.0450 TotalError: 0, Region: Tendring, London: False, Error: 0, Next: -2.2912422316666667, Change: 0.98
+2019-10-14 15:28:57.3849 TotalError: 0, Region: Test Valley, London: False, Error: 0, Next: -2.111246279, Change: 2.74
+2019-10-14 15:28:57.6842 TotalError: 0, Region: Tewkesbury, London: False, Error: 0, Next: -0.194277346, Change: -0.07
+2019-10-14 15:28:57.9456 TotalError: 0, Region: Thanet, London: False, Error: 0, Next: -0.7117968213333334, Change: 0.36
+2019-10-14 15:28:58.2566 TotalError: 0, Region: Three Rivers, London: False, Error: 0, Next: -0.07066476800000003, Change: -0.07
+2019-10-14 15:28:58.6768 TotalError: 0, Region: Thurrock, London: False, Error: 0, Next: -2.7817699890000003, Change: 1.64
+2019-10-14 15:28:59.1578 TotalError: 0, Region: Tonbridge and Malling, London: False, Error: 0, Next: 0.6746053886666669, Change: 0.39
+2019-10-14 15:28:59.3877 TotalError: 0, Region: Torbay, London: False, Error: 0, Next: -0.26133896966666664, Change: 1.32
+2019-10-14 15:28:59.7051 TotalError: 0, Region: Torfaen, London: False, Error: 0, Next: 3.9437830603333333, Change: 0.67
+2019-10-14 15:29:00.1227 TotalError: 0, Region: Torridge, London: False, Error: 0, Next: -0.533216333, Change: -0.39
+2019-10-14 15:29:00.4670 TotalError: 0, Region: Tower Hamlets, London: True, Error: 0, Next: -1.7551136443333333, Change: 0.28
+2019-10-14 15:29:00.7876 TotalError: 0, Region: Trafford, London: False, Error: 0, Next: 6.571850802999999, Change: 1.2
+2019-10-14 15:29:01.0258 TotalError: 0, Region: Tunbridge Wells, London: False, Error: 0, Next: -2.478051745333333, Change: 0.54
+2019-10-14 15:29:02.7864 TotalError: 0, Region: Tyne and Wear, London: False, Error: 0, Next: 0.474567087, Change: -0.41
+2019-10-14 15:29:03.3027 TotalError: 0, Region: United Kingdom, London: False, Error: 0, Next: -0.185870479, Change: 0.25
+2019-10-14 15:29:04.1083 TotalError: 0, Region: Uttlesford, London: False, Error: 0, Next: -2.889921293666667, Change: 2.74
+2019-10-14 15:29:04.5516 TotalError: 0, Region: Vale of Glamorgan, London: False, Error: 0, Next: 1.0489004636666666, Change: 0.56
+2019-10-14 15:29:16.6686 TotalError: 0, Region: Vale of White Horse, London: False, Error: 6.934700400072422E-11, Next: 0.9362282773333334, Change: -0.29
+2019-10-14 15:29:28.1003 TotalError: 0, Region: Wakefield, London: False, Error: 1.3248616746336283E-09, Next: 0.05086367100000002, Change: 0.02
+2019-10-14 15:29:50.9853 TotalError: 0, Region: Wales, London: False, Error: 3.033366496688147E-10, Next: 2.4487073206666667, Change: 1.08
+2019-10-14 15:30:03.1934 TotalError: 0, Region: Walsall, London: False, Error: 4.427918939439683E-10, Next: 0.43721807366666665, Change: 0.43
+2019-10-14 15:30:14.3694 TotalError: 0, Region: Waltham Forest, London: True, Error: 0, Next: -8.040750513, Change: 5.07
+2019-10-14 15:30:14.6407 TotalError: 0, Region: Wandsworth, London: True, Error: 0, Next: -3.140827632, Change: 0.76
+2019-10-14 15:30:15.1441 TotalError: 0, Region: Warrington, London: False, Error: 0, Next: 1.8648893299999998, Change: 1.05
+2019-10-14 15:30:15.9904 TotalError: 0, Region: Warwick, London: False, Error: 0, Next: 1.6413078903333336, Change: -4.63
+2019-10-14 15:30:16.3803 TotalError: 0, Region: Warwickshire, London: False, Error: 0, Next: -0.22147819433333335, Change: 0.42
+2019-10-14 15:30:16.7026 TotalError: 0, Region: Watford, London: False, Error: 0, Next: -0.11301391033333334, Change: 0.04
+2019-10-14 15:30:17.0348 TotalError: 0, Region: Waveney, London: False, Error: 0, Next: 1.944611575333333, Change: 2.64
+2019-10-14 15:30:17.2710 TotalError: 0, Region: Waverley, London: False, Error: 0, Next: -1.8061024896666666, Change: 0.46
+2019-10-14 15:30:17.5108 TotalError: 0, Region: Wealden, London: False, Error: 0, Next: -0.14406902099999996, Change: -0.1
+2019-10-14 15:30:17.8770 TotalError: 0, Region: Wellingborough, London: False, Error: 0, Next: 0.2926558606666666, Change: -0.09
+2019-10-14 15:30:18.1978 TotalError: 0, Region: Welwyn Hatfield, London: False, Error: 0, Next: 1.7876314286666668, Change: 3.84
+2019-10-14 15:30:18.6939 TotalError: 0, Region: West Berkshire, London: False, Error: 0, Next: -1.383364766333333, Change: -2.85
+2019-10-14 15:30:19.1940 TotalError: 0, Region: West Devon, London: False, Error: 0, Next: 6.624728154333334, Change: 0.93
+2019-10-14 15:30:19.5460 TotalError: 0, Region: West Dorset, London: False, Error: 0, Next: -3.90529691, Change: 9.62
+2019-10-14 15:30:19.7871 TotalError: 0, Region: West Dunbartonshire, London: False, Error: 0, Next: -1.5858193223333334, Change: 0.95
+2019-10-14 15:30:20.2956 TotalError: 0, Region: West Lancashire, London: False, Error: 0, Next: -2.8253222059999996, Change: 3.09
+2019-10-14 15:30:20.6525 TotalError: 0, Region: West Lindsey, London: False, Error: 0, Next: -3.7355973749999998, Change: 2.43
+2019-10-14 15:30:20.8413 TotalError: 0, Region: West Lothian, London: False, Error: 0, Next: 2.3189618603333333, Change: 1.74
+2019-10-14 15:30:32.3156 TotalError: 0, Region: West Midlands, London: False, Error: 6.279545948247577E-10, Next: 2.1804964373333333, Change: 1.06
+2019-10-14 15:30:32.9030 TotalError: 0, Region: West Midlands Region, London: False, Error: 0, Next: 1.3310333643333334, Change: 1.32
+2019-10-14 15:30:33.3466 TotalError: 0, Region: West Oxfordshire, London: False, Error: 0, Next: -7.914026322000001, Change: 1.9
+2019-10-14 15:30:46.2790 TotalError: 0, Region: West Somerset, London: False, Error: 2.671208455969352E-10, Next: -2.628191286333333, Change: -0.8
+2019-10-14 15:30:58.2531 TotalError: 0, Region: West Sussex, London: False, Error: 4.009656199180584E-10, Next: -0.9213569966666667, Change: 1.02
+2019-10-14 15:31:09.5030 TotalError: 0, Region: West Yorkshire, London: False, Error: 1.2154664653021525E-10, Next: 1.4898840460000002, Change: 1.78
+2019-10-14 15:31:10.0808 TotalError: 0, Region: Weymouth and Portland, London: False, Error: 0, Next: 1.0544503313333333, Change: -1.57
+2019-10-14 15:31:10.4552 TotalError: 0, Region: Wigan, London: False, Error: 0, Next: 3.4880308503333333, Change: 1
+2019-10-14 15:31:21.9263 TotalError: 0, Region: Wiltshire, London: False, Error: 8.630953701204335E-10, Next: -0.6530663383333333, Change: 0.18
+2019-10-14 15:31:22.3729 TotalError: 0, Region: Winchester, London: False, Error: 0, Next: -4.1781469006666665, Change: 1.77
+2019-10-14 15:31:34.4318 TotalError: 0, Region: Windsor and Maidenhead, London: False, Error: 1.211574633126852E-10, Next: -4.024602414, Change: 0.6
+2019-10-14 15:31:46.0533 TotalError: 0, Region: Wirral, London: False, Error: 1.4283194341522044E-11, Next: -1.4228726226666666, Change: -17.61
+2019-10-14 15:31:46.6695 TotalError: 0, Region: Woking, London: False, Error: 0, Next: -0.587730695, Change: 0.14
+2019-10-14 15:31:47.1232 TotalError: 0, Region: Wokingham, London: False, Error: 0, Next: -1.7827798896666665, Change: 0.68
+2019-10-14 15:31:47.8048 TotalError: 0, Region: Wolverhampton, London: False, Error: 0, Next: 1.957983524, Change: 1.53
+2019-10-14 15:31:48.2116 TotalError: 0, Region: Worcester, London: False, Error: 0, Next: -0.5960176549999999, Change: -1
+2019-10-14 15:31:49.5136 TotalError: 0, Region: Worcestershire, London: False, Error: 0, Next: 0.9041330266666666, Change: 0.71
+2019-10-14 15:32:01.3718 TotalError: 0, Region: Worthing, London: False, Error: 6.499371638079932E-11, Next: 3.3630044933333334, Change: 2.78
+2019-10-14 15:32:01.7128 TotalError: 0, Region: Wrexham, London: False, Error: 0, Next: 0.490549916, Change: -0.29
+2019-10-14 15:32:02.1976 TotalError: 0, Region: Wychavon, London: False, Error: 0, Next: -2.2283979813333334, Change: 3.49
+2019-10-14 15:32:06.5271 TotalError: 0, Region: Wycombe, London: False, Error: 0, Next: 1.2200898486666667, Change: 1.46
+2019-10-14 15:32:07.1325 TotalError: 0, Region: Wyre, London: False, Error: 0, Next: -3.697298944, Change: 2.26
+2019-10-14 15:32:07.5537 TotalError: 0, Region: Wyre Forest, London: False, Error: 0, Next: 0.9853353010000001, Change: 0.34
+2019-10-14 15:32:07.8443 TotalError: 0, Region: York, London: False, Error: 0, Next: 1.3388449076666669, Change: 1.21
