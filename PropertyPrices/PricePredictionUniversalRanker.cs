@@ -21,6 +21,7 @@ using SharpLearning.AdaBoost.Learners;
 using SharpLearning.CrossValidation.TimeSeries;
 using System.Globalization;
 using SharpLearning.CrossValidation.TrainingTestSplitters;
+using System.Diagnostics;
 
 namespace PropertyPrices
 {
@@ -32,19 +33,21 @@ namespace PropertyPrices
         static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "Westminster" };
 
         double _totalError = 0;
-        double _totalCrossError = 0;
-        string _targetName = "Flat12m%Change";
-        const int _targetOffset = 10;
-        private int _iterations = 500;
+        string _targetName = "Flat1m%Change";
+        const int _targetOffset = 12;
+        internal const int DefaultIterations = 200;
+        private int _iterations = DefaultIterations;
 
         private BinaryFeatureEncoder _binaryFeatureEncoder = new BinaryFeatureEncoder();
         private CreditDataExtractor _creditDataExtractor = new CreditDataExtractor();
 
-        public void Predict(int iterations = 500)
+        public void Predict(int iterations = DefaultIterations)
         {
             _iterations = iterations;
 
             Program.StatusLogger.Info($"Iterations: {_iterations}");
+            Program.StatusLogger.Info($"Target: {_targetName}");
+            Program.StatusLogger.Info($"Offset: {_targetOffset}");
 
             //http://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2019-07.csv
             var header = File.ReadLines("UK-HPI-full-file-2019-07.csv").First();
@@ -58,6 +61,7 @@ namespace PropertyPrices
             var targets = parser.EnumerateRows(_targetName).ToArray();
 
             var data = new List<Data>();
+            var targetData = new List<Data>();
             string previousKey = null;
 
             for (int i = 0; i < featureRows.Length; i++)
@@ -73,10 +77,12 @@ namespace PropertyPrices
                 previousKey = key;
 
                 var regionFeatures = item.GetValues(columnNames.Except(excludeColumns).ToArray()).Select(s => ParseRowValue(s));
-                var creditDataKey = _creditDataExtractor.GetKey(date);
+
+                var creditDataKey = _creditDataExtractor.GetMonthOfPreviousQuarter(date);
                 if (!creditData.ContainsKey(creditDataKey))
                 {
-                    Program.StatusLogger.Info($"Credit data not found: {creditDataKey}");
+                    regionFeatures = regionFeatures.Concat(Enumerable.Repeat(-1d, creditData.Values.First().Length));
+                    Trace.WriteLine($"Credit data not found: {creditDataKey}");
                 }
                 else
                 {
@@ -99,8 +105,8 @@ namespace PropertyPrices
                 data.Add(new Data { Key = key, Date = date, Observations = regionFeatures.ToArray(), Targets = regionTargets });
             }
 
-            //var json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            //File.WriteAllText("property_data.json", json);
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText("property_data.json", json);
 
             var regionNames = _binaryFeatureEncoder.Encode(data.Select(s => s.Key));
             for (int i = 0; i < data.Count(); i++)
@@ -192,7 +198,7 @@ namespace PropertyPrices
 
         private ILearner<double> GetAda()
         {
-            return new RegressionAdaBoostLearner(maximumTreeDepth: 1000, iterations: _iterations, learningRate: 0.01);
+            return new RegressionAdaBoostLearner(maximumTreeDepth: 35, iterations: _iterations, learningRate: 0.1);
         }
 
         private double ParseRowValue(string value)
