@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPrices", "PropertyPrices\PropertyPrices.csproj", "{BD15AC35-2AC0-47DD-B76D-BBD36D679236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPricesTests", "PropertyPricesTests\PropertyPricesTests.csproj", "{6F5B2B6E-0D48-4072-9C71-85634662555B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPricesTests", "PropertyPricesTests\PropertyPricesTests.csproj", "{6F5B2B6E-0D48-4072-9C71-85634662555B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

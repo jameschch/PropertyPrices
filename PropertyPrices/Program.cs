@@ -15,7 +15,7 @@ namespace PropertyPrices
         static void Main(string[] args)
         {
             //new PricePredictionRanker().Predict();
-            new PricePredictionUniversalRanker().Predict(args.Any() ? int.Parse(args[0]) : 500);
+            new PricePredictionUniversalRanker().Predict(args.Any() ? int.Parse(args[0]) : PricePredictionUniversalRanker.DefaultIterations);
         }
     }
 }

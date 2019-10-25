@@ -8,24 +8,21 @@ using SharpLearning.Neural.Layers;
 using SharpLearning.Neural.Learners;
 using SharpLearning.Neural.Loss;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SharpLearning.Containers.Extensions;
 using Newtonsoft.Json;
 using SharpLearning.Common.Interfaces;
 using SharpLearning.RandomForest.Learners;
 using SharpLearning.Neural.Optimizers;
 using SharpLearning.GradientBoost.Learners;
 using SharpLearning.AdaBoost.Learners;
-using SharpLearning.CrossValidation.TimeSeries;
 using System.Globalization;
-using SharpLearning.CrossValidation.TrainingTestSplitters;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace PropertyPrices
 {
-    class PricePredictionUniversalRanker
+    partial class PricePredictionUniversalRanker
     {
 
         static string[] excludeColumns = { "RegionName", "AreaCode" };
@@ -33,13 +30,14 @@ namespace PropertyPrices
         static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "Westminster" };
 
         double _totalError = 0;
-        string _targetName = "Flat1m%Change";
-        const int _targetOffset = 12;
+        string _targetName = "FlatPrice";
+        const int _targetOffset = 1;
         internal const int DefaultIterations = 200;
         private int _iterations = DefaultIterations;
 
         private BinaryFeatureEncoder _binaryFeatureEncoder = new BinaryFeatureEncoder();
         private CreditDataExtractor _creditDataExtractor = new CreditDataExtractor();
+        private TargetExtractor _targetExtractor = new TargetExtractor();
 
         public void Predict(int iterations = DefaultIterations)
         {
@@ -49,72 +47,71 @@ namespace PropertyPrices
             Program.StatusLogger.Info($"Target: {_targetName}");
             Program.StatusLogger.Info($"Offset: {_targetOffset}");
 
-            //http://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2019-07.csv
-            var header = File.ReadLines("UK-HPI-full-file-2019-07.csv").First();
-            var columnNames = header.Split(",");
+            var data = new ConcurrentDictionary<int, ModelData>();
 
-            var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
-
-            var creditData = _creditDataExtractor.Extract();
-
-            var featureRows = parser.EnumerateRows().ToArray();
-            var targets = parser.EnumerateRows(_targetName).ToArray();
-
-            var data = new List<Data>();
-            var targetData = new List<Data>();
-            string previousKey = null;
-
-            for (int i = 0; i < featureRows.Length; i++)
+            if (File.Exists(Path()))
             {
-                var item = featureRows[i];
-                var key = item.GetValue("RegionName");
-                var date = DateTime.ParseExact(item.GetValue("Date"), "dd/MM/yyyy", new CultureInfo("en-GB"), DateTimeStyles.AssumeLocal);
+                data = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ModelData>>(File.ReadAllText(Path()));
+                Program.StatusLogger.Info("Cached data was loaded.");
+            }
+            else
+            {
 
-                if (key != previousKey)
-                {
-                    Program.StatusLogger.Info($"Processing {key}");
-                }
-                previousKey = key;
+                //http://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2019-07.csv
+                var header = File.ReadLines("UK-HPI-full-file-2019-07.csv").First();
+                var columnNames = header.Split(",");
 
-                var regionFeatures = item.GetValues(columnNames.Except(excludeColumns).ToArray()).Select(s => ParseRowValue(s));
+                var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
 
-                var creditDataKey = _creditDataExtractor.GetMonthOfPreviousQuarter(date);
-                if (!creditData.ContainsKey(creditDataKey))
+                var creditData = _creditDataExtractor.Extract();
+
+                var featureRows = parser.EnumerateRows().ToArray();
+                var targets = parser.EnumerateRows(_targetName).ToArray();
+
+                string previousKey = null;
+
+                for (int i = 0; i < featureRows.Length; i++)
                 {
-                    regionFeatures = regionFeatures.Concat(Enumerable.Repeat(-1d, creditData.Values.First().Length));
-                    Trace.WriteLine($"Credit data not found: {creditDataKey}");
-                }
-                else
-                {
-                    regionFeatures = regionFeatures.Concat(creditData[creditDataKey]);
+                    var item = featureRows[i];
+                    var key = item.GetValue("RegionName");
+                    var date = DateTime.ParseExact(item.GetValue("Date"), "dd/MM/yyyy", new CultureInfo("en-GB"), DateTimeStyles.AssumeLocal);
+
+                    if (key != previousKey)
+                    {
+                        Program.StatusLogger.Info($"Processing {key}");
+                    }
+                    previousKey = key;
+
+                    var regionFeatures = item.GetValues(columnNames.Except(excludeColumns).ToArray()).Select(s => ParseRowValue(s));
+
+                    var creditDataKey = _creditDataExtractor.GetMonthOfPreviousQuarter(date);
+                    if (!creditData.ContainsKey(creditDataKey))
+                    {
+                        regionFeatures = regionFeatures.Concat(Enumerable.Repeat(-1d, creditData.Values.First().Length));
+                        Trace.WriteLine($"Credit data not found: {creditDataKey}");
+                    }
+                    else
+                    {
+                        regionFeatures = regionFeatures.Concat(creditData[creditDataKey]);
+                    }
+
+                    data.TryAdd(i, new ModelData { Name = key, Date = date, Observations = regionFeatures.ToArray(), OriginalTarget = ParseRowValue(item.GetValue(_targetName)) });
                 }
 
-                double regionTargets = -1;
-                //last target is future
-                if (i > _targetOffset && featureRows.Length - _targetOffset - i <= 0)
-                {
-                    regionTargets = -1;
-                }
-                //target is next observation
-                else if (featureRows[i + _targetOffset].GetValue("RegionName") == key)
-                {
-                    var value = targets.Skip(i).Take(_targetOffset).ToArray().Where(w => !string.IsNullOrEmpty(w.GetValue(_targetName))).Select(s => s.GetValue(_targetName)).ToArray();
-                    regionTargets = !value.Any() ? -1d : value.Average(a => double.Parse(a));
-                }
+                _targetExtractor.Extract(data, _targetOffset);
 
-                data.Add(new Data { Key = key, Date = date, Observations = regionFeatures.ToArray(), Targets = regionTargets });
+                var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+                File.WriteAllText(Path(), json);
             }
 
-            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            File.WriteAllText("property_data.json", json);
-
-            var regionNames = _binaryFeatureEncoder.Encode(data.Select(s => s.Key));
+            var regionNames = _binaryFeatureEncoder.Encode(data.Select(s => s.Value.Name));
             for (int i = 0; i < data.Count(); i++)
             {
-                data[i].Observations = data[i].Observations.Concat(regionNames[data[i].Key]).ToArray();
+                data[i].Observations = data[i].Observations.Concat(regionNames[data[i].Name]).ToArray();
             }
 
-            data = data.Where(d => d.Targets != -1).OrderBy(o => o.Date).ToList();
+            //data.Where(d => d.Value.Target != -1)
+            data = new ConcurrentDictionary<int, ModelData>(data.OrderBy(o => o.Value.Date));
 
             var itemCount = 0;
 
@@ -126,35 +123,37 @@ namespace PropertyPrices
 
             var learner = GetAda();
 
-            var lastDate = data.Last().Date;
+            var lastDate = data.Last().Value.Date;
 
-            var allObservationsExceptLast = data.Where(s => s.Date != lastDate).Select(s => s.Observations).ToArray();
-            var allTargetsExceptLast = data.Where(s => s.Date != lastDate).Select(s => s.Targets).ToArray();
+            var dataWithTarget = data.Where(s => s.Value.Target != -1);
+
+            var allObservations = dataWithTarget.Select(s => s.Value.Observations).ToArray();
+            var allTargets = dataWithTarget.Select(s => s.Value.Target).ToArray();
 
             //var splitter = new NoShuffleTrainingTestIndexSplitter<double>(0.8);
             //var split = splitter.SplitSet(dateSortedData.Select(s => s.First).ToArray(), dateSortedData.Select(s => s.Second).ToArray());
 
             var meanZeroTransformer = new MeanZeroFeatureTransformer();
-            F64Matrix transformed = meanZeroTransformer.Transform(allObservationsExceptLast);
+            F64Matrix transformed = meanZeroTransformer.Transform(allObservations);
 
             Program.StatusLogger.Info("Learning commenced");
-            var model = learner.Learn(transformed, allTargetsExceptLast);
+            var model = learner.Learn(transformed, allTargets);
             Program.StatusLogger.Info("Learning completed");
 
             var importanceSummary = string.Join(",\r\n", model.GetRawVariableImportance().Select((d, i) => i.ToString() + ":" + d.ToString()));
 
-            Program.StatusLogger.Info("Raw variable importance:" + importanceSummary);
+            Program.StatusLogger.Info("Raw variable importance:\r\n" + importanceSummary);
 
-            var lastObservations = data.Where(s => s.Date == lastDate).Select(s => s.Observations).ToArray();
+            var lastObservations = data.Where(s => s.Value.Date == lastDate).Select(s => s.Value.Observations).ToArray();
 
             var prediction = model.Predict(lastObservations);
             //var before = item.Targets[transformed.RowCount - _targetOffset - 1];
             //var change = Math.Round(prediction / before, 2);
 
-            var allPrediction = model.Predict(meanZeroTransformer.Transform(allObservationsExceptLast));
+            var allPrediction = model.Predict(meanZeroTransformer.Transform(allObservations));
 
             var metric = new MeanSquaredErrorRegressionMetric();
-            var error = metric.Error(allTargetsExceptLast, allPrediction);
+            var error = metric.Error(allTargets, allPrediction);
             _totalError += error;
             itemCount++;
 
@@ -212,12 +211,9 @@ namespace PropertyPrices
             return string.IsNullOrEmpty(value) ? -1d : double.Parse(value);
         }
 
-        private class Data
+        private string Path()
         {
-            public string Key;
-            public DateTime Date;
-            public double[] Observations;
-            public double Targets;
+            return _targetOffset + "_" + _targetName + "_property_data.json";
         }
 
     }
