@@ -15,7 +15,7 @@ namespace PropertyPrices
 
             Program.StatusLogger.Info("Calculating Targets");
             Parallel.For(0, data.Count(), new ParallelOptions { MaxDegreeOfParallelism = -1 }, i =>
-             {
+            {
                  var item = data[i];
                  if (item.OriginalTarget > 0)
                  {
@@ -25,7 +25,7 @@ namespace PropertyPrices
                      {
                          var change = forward.Value.OriginalTarget - item.OriginalTarget;
                          var percent = change / item.OriginalTarget;
-                         if (Math.Abs(percent) > 0.7)
+                         if (Math.Abs(percent) > 0.7 && offset == 1)
                          {
                             Program.StatusLogger.Info($"Suspect target: {item.Name} {item.Date} {percent}");
                          }

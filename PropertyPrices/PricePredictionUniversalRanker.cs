@@ -19,6 +19,7 @@ using SharpLearning.AdaBoost.Learners;
 using System.Globalization;
 using System.Diagnostics;
 using System.Collections.Concurrent;
+using ServiceStack.Text;
 
 namespace PropertyPrices
 {
@@ -31,8 +32,8 @@ namespace PropertyPrices
 
         double _totalError = 0;
         string _targetName = "FlatPrice";
-        const int _targetOffset = 1;
-        internal const int DefaultIterations = 200;
+        const int _targetOffset = 5;
+        internal const int DefaultIterations = 100;
         private int _iterations = DefaultIterations;
 
         private BinaryFeatureEncoder _binaryFeatureEncoder = new BinaryFeatureEncoder();
@@ -52,6 +53,8 @@ namespace PropertyPrices
             if (File.Exists(Path()))
             {
                 data = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ModelData>>(File.ReadAllText(Path()));
+                //data = TypeSerializer.DeserializeFromReader<ConcurrentDictionary<int, ModelData>>(new StreamReader(Path()));
+
                 Program.StatusLogger.Info("Cached data was loaded.");
             }
             else
@@ -63,7 +66,7 @@ namespace PropertyPrices
 
                 var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
 
-                var creditData = _creditDataExtractor.Extract();
+                var creditData = _creditDataExtractor.ExtractQuarter();
 
                 var featureRows = parser.EnumerateRows().ToArray();
                 var targets = parser.EnumerateRows(_targetName).ToArray();
@@ -100,6 +103,8 @@ namespace PropertyPrices
 
                 _targetExtractor.Extract(data, _targetOffset);
 
+
+                //TypeSerializer.SerializeToWriter<ConcurrentDictionary<int, ModelData>>(data, new StreamWriter(Path()));
                 var json = JsonConvert.SerializeObject(data, Formatting.Indented);
                 File.WriteAllText(Path(), json);
             }
@@ -150,11 +155,11 @@ namespace PropertyPrices
             //var before = item.Targets[transformed.RowCount - _targetOffset - 1];
             //var change = Math.Round(prediction / before, 2);
 
-            var allPrediction = model.Predict(meanZeroTransformer.Transform(allObservations));
+            var allPrediction = model.Predict(transformed);
 
             var metric = new MeanSquaredErrorRegressionMetric();
             var error = metric.Error(allTargets, allPrediction);
-            _totalError += error;
+            _totalError = error;
             itemCount++;
 
             foreach (var item in lastObservations.Zip(prediction))

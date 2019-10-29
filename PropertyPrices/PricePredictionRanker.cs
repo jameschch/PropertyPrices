@@ -20,147 +20,170 @@ using SharpLearning.GradientBoost.Learners;
 using SharpLearning.AdaBoost.Learners;
 using SharpLearning.CrossValidation.TimeSeries;
 using System.Globalization;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace PropertyPrices
 {
     class PricePredictionRanker
     {
 
-        static string[] excludeColumns = { "Date", "RegionName", "AreaCode" };
+        static string[] excludeColumns = { "RegionName", "AreaCode" };
 
-        static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "Westminster" };
+        static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "City of Westminster" };
 
         double _totalError = 0;
         double _totalCrossError = 0;
-        string _targetName = "Flat12m%Change";
-        const int _targetOffset = 3;
+        string _targetName = "FlatPrice";
+        const int _targetOffset = 1;
+        internal const int DefaultIterations = 1200;
+        private int _iterations = DefaultIterations;
+        static object Locker = new object();
 
-        public void Predict()
+        private CreditDataExtractor _creditDataExtractor = new CreditDataExtractor();
+        private TargetExtractor _targetExtractor = new TargetExtractor();
+
+        public void Predict(int iterations = DefaultIterations)
         {
-            //http://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2019-07.csv
-            var header = File.ReadLines("UK-HPI-full-file-2019-07.csv").First();
-            var columnNames = header.Split(",");
+            _iterations = iterations;
 
-            var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
+            Program.StatusLogger.Info($"Iterations: {_iterations}");
+            Program.StatusLogger.Info($"Target: {_targetName}");
+            Program.StatusLogger.Info($"Offset: {_targetOffset}");
 
-            var features = parser.EnumerateRows().ToArray();
-            var targets = parser.EnumerateRows(_targetName).ToArray();
-
-            string previous = null;
-            Dictionary<string, (List<double[]>, double[])> data = new Dictionary<string, (List<double[]>, double[])>();
-
-            List<double[]> regionFeatures = null;
-            List<double> regionTargets = null;
-            //var isFirst = true;
-            for (int i = 0; i < features.Length; i++)
+            var data = new ConcurrentDictionary<int, ModelData>();
+            if (File.Exists(Path()))
             {
-                var item = features[i];
-                var key = item.GetValue("RegionName");
-                if (key != previous)
+                data = JsonConvert.DeserializeObject<ConcurrentDictionary<int, ModelData>>(File.ReadAllText(Path()));
+                //data = TypeSerializer.DeserializeFromReader<ConcurrentDictionary<int, ModelData>>(new StreamReader(Path()));
+
+                Program.StatusLogger.Info("Cached data was loaded.");
+            }
+            else
+            {
+
+                //http://publicdata.landregistry.gov.uk/market-trend-data/house-price-index-data/UK-HPI-full-file-2019-07.csv
+                var header = File.ReadLines("UK-HPI-full-file-2019-07.csv").First();
+                var columnNames = header.Split(",");
+
+                var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
+
+                var creditData = _creditDataExtractor.Extract();
+
+                var featureRows = parser.EnumerateRows().ToArray();
+                var targets = parser.EnumerateRows(_targetName).ToArray();
+
+                string previousKey = null;
+
+                for (int i = 0; i < featureRows.Length; i++)
                 {
-                    if (regionFeatures?.Any() ?? false)
+                    var item = featureRows[i];
+                    var key = item.GetValue("RegionName");
+                    var date = DateTime.ParseExact(item.GetValue("Date"), "dd/MM/yyyy", new CultureInfo("en-GB"), DateTimeStyles.AssumeLocal);
+
+                    if (key != previousKey)
                     {
-                        if (regionTargets.Any(a => a != -1))
-                        {
-                            data.Add(previous, (regionFeatures, regionTargets.ToArray()));
-                        }
+                        Program.StatusLogger.Info($"Processing {key}");
                     }
-                    regionFeatures = new List<double[]>();
-                    regionTargets = new List<double>();
+                    previousKey = key;
 
-                    //if (isFirst)
-                    //{
-                    //    isFirst = false;
-                    //}
-                    //else
-                    //{
-                    //    break;
-                    //}
+                    var regionFeatures = item.GetValues(columnNames.Except(excludeColumns).ToArray()).Select(s => ParseRowValue(s));
+
+                    var creditDataKey = _creditDataExtractor.GetKey(date, creditData.Keys.ToArray());
+                    if (!creditData.ContainsKey(creditDataKey))
+                    {
+                        regionFeatures = regionFeatures.Concat(Enumerable.Repeat(-1d, creditData.Values.First().Length));
+                        Trace.WriteLine($"Credit data not found: {creditDataKey}");
+                    }
+                    else
+                    {
+                        regionFeatures = regionFeatures.Concat(creditData[creditDataKey]);
+                    }
+
+                    data.TryAdd(i, new ModelData { Name = key, Date = date, Observations = regionFeatures.ToArray(), OriginalTarget = ParseRowValue(item.GetValue(_targetName)) });
                 }
 
-                regionFeatures.Add(item.GetValues(columnNames.Except(excludeColumns).ToArray()).Select(s => string.IsNullOrEmpty(s) ? -1d : double.Parse(s)).ToArray());
-                regionFeatures.Add(item.GetValues(new[] { "Date" }).Select(s => (double)DateTime.Parse(s, new CultureInfo("en-GB")).Ticks).ToArray());
+                _targetExtractor.Extract(data, _targetOffset);
 
-                //last target is future
-                if (i > _targetOffset && features.Length - _targetOffset - i <= 0)
-                {
-                    regionTargets.Add(-1);
-                }
-                //target is next observation
-                else if (features[i + _targetOffset].GetValue("RegionName") == key)
-                {
-                    var value = targets.Skip(i).Take(_targetOffset).ToArray().Where(w => !string.IsNullOrEmpty(w.GetValue(_targetName))).Select(s => s.GetValue(_targetName)).ToArray();
-                    regionTargets.Add(!value.Any() ? 0d : value.Average(a => double.Parse(a)));
-                }
 
-                previous = key;
+                //TypeSerializer.SerializeToWriter<ConcurrentDictionary<int, ModelData>>(data, new StreamWriter(Path()));
+                var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+                File.WriteAllText(Path(), json);
             }
 
-            //var json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            //File.WriteAllText("property_data.json", json);
 
-            var regionNames = new BinaryFeatureEncoder().Encode(data.Keys);
 
             var itemCount = 0;
-            foreach (var item in data)
-            {
-                var meanZeroTransformer = new MeanZeroFeatureTransformer();
-                for (int i = 0; i < item.Value.Item1.Count(); i++)
-                {
-                    item.Value.Item1[i] = item.Value.Item1[i].Concat(regionNames[item.Key]).ToArray();
-                }
+            Parallel.ForEach(data.OrderBy(o => o.Value.Date).GroupBy(g => g.Value.Name).AsParallel(), new ParallelOptions { MaxDegreeOfParallelism = -1 }, (grouping) =>
+             {
 
-                F64Matrix transformed = meanZeroTransformer.Transform(item.Value.Item1.ToArray());
-                //F64Matrix transformed = item.Value.Item1;
+                 var lastDate = grouping.Last().Value.Date;
+                 var dataWithTarget = grouping.Where(s => s.Value.Target != -1);
 
-                var numberOfFeatures = transformed.ColumnCount;
+                 if (dataWithTarget.Any())
+                 {
+                     var allObservations = dataWithTarget.Select(s => s.Value.Observations).ToArray();
+                     var allTargets = dataWithTarget.Select(s => s.Value.Target).ToArray();
 
-                //var learner = GetRandomForest();
+                     //var learner = GetRandomForest();
+                     //var learner = GetAda();
+                     var learner = GetNeuralnet(grouping.First().Value.Observations.Length, allObservations.Length);
 
-                //var learner = GetNeuralnet(numberOfFeatures);
+                     //var validation = new TimeSeriesCrossValidation<double>((int)(allObservationsExceptLast.RowCount * 0.8), 0, 1);
+                     //var validationPredictions = validation.Validate((IIndexedLearner<double>)learner, allObservationsExceptLast, allTargetsExceptLast);
+                     //var crossMetric = new MeanSquaredErrorRegressionMetric();
+                     //var crossError = crossMetric.Error(validation.GetValidationTargets(allTargetsExceptLast), validationPredictions);
+                     //_totalCrossError += crossError;
+                     var meanZeroTransformer = new MeanZeroFeatureTransformer();
+                     var minMaxTransformer = new MinMaxTransformer(0d, 1d);
+                     var lastObservations = grouping.Last().Value.Observations;
+                     F64Matrix allTransformed = minMaxTransformer.Transform(meanZeroTransformer.Transform(allObservations.Append(lastObservations).ToArray()));
+                     var transformed = new F64Matrix(allTransformed.Rows(Enumerable.Range(0, allTransformed.RowCount - 1).ToArray()).Data(), allTransformed.RowCount - 1, allTransformed.ColumnCount);
 
-                var learner = GetAda();
+                     Program.StatusLogger.Info("Learning commenced " + grouping.First().Value.Name);
+                     var model = learner.Learn(transformed, allTargets);
+                     Program.StatusLogger.Info("Learning completed " + grouping.First().Value.Name);
 
-                var allObservationsExceptLast = (F64Matrix)transformed.Rows(Enumerable.Range(0, transformed.RowCount - _targetOffset - 1).ToArray());
-                var allTargetsExceptLast = item.Value.Item2.Take(transformed.RowCount - _targetOffset - 1).ToArray();
-                var model = learner.Learn(allObservationsExceptLast, allTargetsExceptLast);
-
-                //var validation = new TimeSeriesCrossValidation<double>((int)(allObservationsExceptLast.RowCount * 0.8), 0, 1);
-                //var validationPredictions = validation.Validate((IIndexedLearner<double>)learner, allObservationsExceptLast, allTargetsExceptLast);
-                //var crossMetric = new MeanSquaredErrorRegressionMetric();
-                //var crossError = crossMetric.Error(validation.GetValidationTargets(allTargetsExceptLast), validationPredictions);
-                //_totalCrossError += crossError;
-
-                var prediction = model.Predict(transformed.Row(transformed.RowCount - 1));
-                var before = item.Value.Item2[transformed.RowCount - _targetOffset - 1];
-                var change = Math.Round(prediction / before, 2);
-
-                var allPrediction = model.Predict(allObservationsExceptLast);
-
-                var metric = new MeanSquaredErrorRegressionMetric();
-                var error = metric.Error(allTargetsExceptLast, allPrediction);
-                _totalError += error;
-                itemCount++;
-                var isLondon = London.Contains(item.Key);
-
-                //var message = $"TotalError: {(int)(_totalError / itemCount)}, TotalCrossError: {(_totalCrossError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, CrossError: {crossError}, Next: {prediction}, Change: {change}";
-                var message = $"TotalError: {(int)(_totalError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, Next: {prediction}, Change: {change}";
+                     if (model.GetRawVariableImportance().Any(a => a > 0))
+                     {
+                         var importanceSummary = string.Join(",\r\n", model.GetRawVariableImportance().Select((d, i) => i.ToString() + ":" + d.ToString()));
+                         Program.StatusLogger.Info("Raw variable importance:\r\n" + importanceSummary);
+                     }
 
 
-                Program.Logger.Info(message);
+                     var lastTransformed = allTransformed.Row(transformed.RowCount);
+                     var prediction = model.Predict(lastTransformed);
 
-            }
+                     //var before = item.Value.Item2[transformed.RowCount - _targetOffset - 1];
+                     var change = -1;//Math.Round(prediction / before, 2);
+
+                     var allPrediction = model.Predict(transformed);
+
+                     var metric = new MeanSquaredErrorRegressionMetric();
+                     var error = metric.Error(allTargets, allPrediction);
+                     _totalError += error;
+                     itemCount++;
+                     var isLondon = London.Contains(grouping.First().Value.Name);
+
+                     //var message = $"TotalError: {(int)(_totalError / itemCount)}, TotalCrossError: {(_totalCrossError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, CrossError: {crossError}, Next: {prediction}, Change: {change}";
+                     var message = $"TotalError: {Math.Round(_totalError / itemCount, 3)}, Region: {grouping.First().Value.Name}, London: {isLondon}, Error: {Math.Round(error, 3)}, Next: {Math.Round(prediction, 3)}, Change: {change}";
+
+                     Program.Logger.Info(message);
+                 }
+             });
+
             Console.ReadKey();
         }
 
-        private ILearner<double> GetNeuralnet(int numberOfFeatures)
+        private ILearner<double> GetNeuralnet(int numberOfFeatures, int batchSize)
         {
             var net = new NeuralNet();
             net.Add(new InputLayer(inputUnits: numberOfFeatures));
-            net.Add(new DenseLayer(numberOfFeatures, Activation.Relu));
+            net.Add(new DenseLayer(numberOfFeatures, Activation.Sigmoid));
             net.Add(new SquaredErrorRegressionLayer());
 
-            var learner = new RegressionNeuralNetLearner(net, learningRate: 0.001, iterations: 2000, loss: new SquareLoss(), batchSize: 180, optimizerMethod: OptimizerMethod.Adam);
+            var learner = new RegressionNeuralNetLearner(net, learningRate: 0.01, iterations: _iterations, loss: new SquareLoss(), batchSize: batchSize, optimizerMethod: OptimizerMethod.RMSProp);
 
             return learner;
         }
@@ -178,7 +201,23 @@ namespace PropertyPrices
 
         private ILearner<double> GetAda()
         {
-            return new RegressionAdaBoostLearner(maximumTreeDepth: 1000, iterations: 500, learningRate: 0.01);
+            return new RegressionAdaBoostLearner(maximumTreeDepth: 35, iterations: _iterations/*200*/, learningRate: 0.1, loss: AdaBoostRegressionLoss.Linear);
+        }
+
+        private double ParseRowValue(string value)
+        {
+
+            if (DateTime.TryParseExact(value, "dd/MM/yyyy", new CultureInfo("en-GB"), DateTimeStyles.AssumeLocal, out var parsed))
+            {
+                return (double)parsed.Ticks;
+            }
+
+            return string.IsNullOrEmpty(value) ? -1d : double.Parse(value);
+        }
+
+        private string Path()
+        {
+            return _targetOffset + "_" + _targetName + "_property_data.json";
         }
 
     }
