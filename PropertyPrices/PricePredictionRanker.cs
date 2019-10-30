@@ -23,6 +23,8 @@ using System.Globalization;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using SharpLearning.Ensemble.Learners;
+using SharpLearning.CrossValidation.TrainingTestSplitters;
 
 namespace PropertyPrices
 {
@@ -37,14 +39,15 @@ namespace PropertyPrices
         double _totalCrossError = 0;
         string _targetName = "FlatPrice";
         const int _targetOffset = 1;
-        internal const int DefaultIterations = 1200;
-        private int _iterations = DefaultIterations;
+        const int DefaultNNIterations = 1600;//NN
+        const int DefaultAdaIterations = 300;//ada
+        private int _iterations = DefaultNNIterations;
         static object Locker = new object();
 
         private CreditDataExtractor _creditDataExtractor = new CreditDataExtractor();
         private TargetExtractor _targetExtractor = new TargetExtractor();
 
-        public void Predict(int iterations = DefaultIterations)
+        public void Predict(int iterations = DefaultNNIterations)
         {
             _iterations = iterations;
 
@@ -112,8 +115,6 @@ namespace PropertyPrices
                 File.WriteAllText(Path(), json);
             }
 
-
-
             var itemCount = 0;
             Parallel.ForEach(data.OrderBy(o => o.Value.Date).GroupBy(g => g.Value.Name).AsParallel(), new ParallelOptions { MaxDegreeOfParallelism = -1 }, (grouping) =>
              {
@@ -126,10 +127,6 @@ namespace PropertyPrices
                      var allObservations = dataWithTarget.Select(s => s.Value.Observations).ToArray();
                      var allTargets = dataWithTarget.Select(s => s.Value.Target).ToArray();
 
-                     //var learner = GetRandomForest();
-                     //var learner = GetAda();
-                     var learner = GetNeuralnet(grouping.First().Value.Observations.Length, allObservations.Length);
-
                      //var validation = new TimeSeriesCrossValidation<double>((int)(allObservationsExceptLast.RowCount * 0.8), 0, 1);
                      //var validationPredictions = validation.Validate((IIndexedLearner<double>)learner, allObservationsExceptLast, allTargetsExceptLast);
                      //var crossMetric = new MeanSquaredErrorRegressionMetric();
@@ -141,8 +138,22 @@ namespace PropertyPrices
                      F64Matrix allTransformed = minMaxTransformer.Transform(meanZeroTransformer.Transform(allObservations.Append(lastObservations).ToArray()));
                      var transformed = new F64Matrix(allTransformed.Rows(Enumerable.Range(0, allTransformed.RowCount - 1).ToArray()).Data(), allTransformed.RowCount - 1, allTransformed.ColumnCount);
 
+                     var splitter = new RandomTrainingTestIndexSplitter<double>(trainingPercentage: 0.7, seed: 24);
+
+                     var trainingTestSplit = splitter.SplitSet(transformed, allTargets);
+                     transformed = trainingTestSplit.TrainingSet.Observations;
+                     var testSet = trainingTestSplit.TestSet;
+
+                     //var learner = GetRandomForest();
+                     //var learner = GetAda();
+                     //var learner = GetNeuralNet(grouping.First().Value.Observations.Length, transformed.RowCount);
+                     var learner = GetEnsemble(grouping.First().Value.Observations.Length, transformed.RowCount);
+
+
                      Program.StatusLogger.Info("Learning commenced " + grouping.First().Value.Name);
-                     var model = learner.Learn(transformed, allTargets);
+
+                     var model = learner.Learn(transformed, trainingTestSplit.TrainingSet.Targets);
+
                      Program.StatusLogger.Info("Learning completed " + grouping.First().Value.Name);
 
                      if (model.GetRawVariableImportance().Any(a => a > 0))
@@ -151,39 +162,44 @@ namespace PropertyPrices
                          Program.StatusLogger.Info("Raw variable importance:\r\n" + importanceSummary);
                      }
 
-
                      var lastTransformed = allTransformed.Row(transformed.RowCount);
                      var prediction = model.Predict(lastTransformed);
 
                      //var before = item.Value.Item2[transformed.RowCount - _targetOffset - 1];
                      var change = -1;//Math.Round(prediction / before, 2);
 
-                     var allPrediction = model.Predict(transformed);
+                     var testPrediction = model.Predict(testSet.Observations);
 
                      var metric = new MeanSquaredErrorRegressionMetric();
-                     var error = metric.Error(allTargets, allPrediction);
-                     _totalError += error;
-                     itemCount++;
+                     var error = metric.Error(testSet.Targets, testPrediction);
+                     var averageError = 0d;
+                     lock (Locker)
+                     {
+                         _totalError += error;
+                         itemCount++;
+                         averageError = Math.Round(_totalError / itemCount, 3);
+                     }
                      var isLondon = London.Contains(grouping.First().Value.Name);
 
                      //var message = $"TotalError: {(int)(_totalError / itemCount)}, TotalCrossError: {(_totalCrossError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, CrossError: {crossError}, Next: {prediction}, Change: {change}";
-                     var message = $"TotalError: {Math.Round(_totalError / itemCount, 3)}, Region: {grouping.First().Value.Name}, London: {isLondon}, Error: {Math.Round(error, 3)}, Next: {Math.Round(prediction, 3)}, Change: {change}";
+                     var message = $"TotalError: {Math.Round(_totalError, 3)}, AverageError: {averageError}, Region: {grouping.First().Value.Name}, London: {isLondon}, Error: {Math.Round(error, 3)}, Next: {Math.Round(prediction, 3)}, Change: {change}";
 
                      Program.Logger.Info(message);
                  }
              });
 
+            Console.WriteLine("Press any key to continue");
             Console.ReadKey();
         }
 
-        private ILearner<double> GetNeuralnet(int numberOfFeatures, int batchSize)
+        private ILearner<double> GetNeuralNet(int numberOfFeatures, int batchSize, int? iterations = null)
         {
             var net = new NeuralNet();
             net.Add(new InputLayer(inputUnits: numberOfFeatures));
-            net.Add(new DenseLayer(numberOfFeatures, Activation.Sigmoid));
+            net.Add(new DenseLayer(numberOfFeatures, Activation.Relu));
             net.Add(new SquaredErrorRegressionLayer());
 
-            var learner = new RegressionNeuralNetLearner(net, learningRate: 0.01, iterations: _iterations, loss: new SquareLoss(), batchSize: batchSize, optimizerMethod: OptimizerMethod.RMSProp);
+            var learner = new RegressionNeuralNetLearner(net, learningRate: 0.01, iterations: iterations ?? _iterations, loss: new SquareLoss(), batchSize: batchSize, optimizerMethod: OptimizerMethod.RMSProp);
 
             return learner;
         }
@@ -199,9 +215,21 @@ namespace PropertyPrices
             return new RegressionSquareLossGradientBoostLearner(iterations: 3000, maximumTreeDepth: 2000);
         }
 
-        private ILearner<double> GetAda()
+        private ILearner<double> GetAda(int? iterations = null)
         {
-            return new RegressionAdaBoostLearner(maximumTreeDepth: 35, iterations: _iterations/*200*/, learningRate: 0.1, loss: AdaBoostRegressionLoss.Linear);
+            return new RegressionAdaBoostLearner(maximumTreeDepth: 35, iterations: iterations ?? _iterations, learningRate: 0.1, loss: AdaBoostRegressionLoss.Squared);
+        }
+
+        private ILearner<double> GetEnsemble(int numberOfFeatures, int batchSize)
+        {
+            return new RegressionEnsembleLearner(
+                new IIndexedLearner<double>[]
+                {
+                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 1800),
+                    (IIndexedLearner<double>)GetAda(400),
+                },
+                seed: 42
+            );
         }
 
         private double ParseRowValue(string value)
