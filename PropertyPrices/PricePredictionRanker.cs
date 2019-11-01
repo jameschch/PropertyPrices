@@ -25,15 +25,18 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using SharpLearning.Ensemble.Learners;
 using SharpLearning.CrossValidation.TrainingTestSplitters;
+using SharpLearning.Ensemble.Strategies;
 
 namespace PropertyPrices
 {
+    //https://arxiv.org/ftp/arxiv/papers/1802/1802.08238.pdf
+    //GVA, Population density, income
     class PricePredictionRanker
     {
 
         static string[] excludeColumns = { "RegionName", "AreaCode" };
 
-        static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "City of Westminster" };
+        public static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "City of Westminster" };
 
         double _totalError = 0;
         double _totalCrossError = 0;
@@ -45,6 +48,10 @@ namespace PropertyPrices
         static object Locker = new object();
 
         private CreditDataExtractor _creditDataExtractor = new CreditDataExtractor();
+        private PopulationDataExtractor _populationDataExtractor = new PopulationDataExtractor("MYEB3_summary_components_of_change_series_UK_(2018_geog19).csv", "ladcode19", "laname19");
+        private PopulationDataExtractor _otherPopulationDataExtractor = new PopulationDataExtractor("MYEB3_summary_components_of_change_series_UK_(2018).csv", "ladcode18", "laname18");
+        private LondonDensityDataExtractor _londonDensityDataExtractor = new LondonDensityDataExtractor();
+        private GvaDataExtractor _gvaDataExtractor = new GvaDataExtractor();
         private TargetExtractor _targetExtractor = new TargetExtractor();
 
         public void Predict(int iterations = DefaultNNIterations)
@@ -73,6 +80,10 @@ namespace PropertyPrices
                 var parser = new CsvParser(() => new StringReader(File.ReadAllText("UK-HPI-full-file-2019-07.csv")), ',', false, true);
 
                 var creditData = _creditDataExtractor.Extract();
+                var populationData = _populationDataExtractor.Extract();
+                var otherPopulationData = _otherPopulationDataExtractor.Extract();
+                var densityData = _londonDensityDataExtractor.Extract();
+                //var gvaData = _gvaDataExtractor.Extract();
 
                 var featureRows = parser.EnumerateRows().ToArray();
                 var targets = parser.EnumerateRows(_targetName).ToArray();
@@ -104,7 +115,23 @@ namespace PropertyPrices
                         regionFeatures = regionFeatures.Concat(creditData[creditDataKey]);
                     }
 
-                    data.TryAdd(i, new ModelData { Name = key, Date = date, Observations = regionFeatures.ToArray(), OriginalTarget = ParseRowValue(item.GetValue(_targetName)) });
+                    var modelData = new ModelData
+                    {
+                        Name = key,
+                        Code = item.GetValue("AreaCode"),
+                        Date = date,
+                        Observations = regionFeatures.ToArray(),
+                        OriginalTarget = ParseRowValue(item.GetValue(_targetName))
+                    };
+
+                    modelData.Observations = modelData.Observations
+                        .Concat(_populationDataExtractor.Get(populationData, modelData))
+                        .Concat(_londonDensityDataExtractor.Get(densityData, modelData))
+                        .Concat(_otherPopulationDataExtractor.Get(otherPopulationData, modelData))
+                        //.Concat(_gvaDataExtractor.Get(gvaData, modelData))
+                        .ToArray();
+
+                    data.TryAdd(i, modelData);
                 }
 
                 _targetExtractor.Extract(data, _targetOffset);
@@ -149,7 +176,6 @@ namespace PropertyPrices
                      //var learner = GetNeuralNet(grouping.First().Value.Observations.Length, transformed.RowCount);
                      var learner = GetEnsemble(grouping.First().Value.Observations.Length, transformed.RowCount);
 
-
                      Program.StatusLogger.Info("Learning commenced " + grouping.First().Value.Name);
 
                      var model = learner.Learn(transformed, trainingTestSplit.TrainingSet.Targets);
@@ -181,7 +207,6 @@ namespace PropertyPrices
                      }
                      var isLondon = London.Contains(grouping.First().Value.Name);
 
-                     //var message = $"TotalError: {(int)(_totalError / itemCount)}, TotalCrossError: {(_totalCrossError / itemCount)}, Region: {item.Key}, London: {isLondon}, Error: {error}, CrossError: {crossError}, Next: {prediction}, Change: {change}";
                      var message = $"TotalError: {Math.Round(_totalError, 3)}, AverageError: {averageError}, Region: {grouping.First().Value.Name}, London: {isLondon}, Error: {Math.Round(error, 3)}, Next: {Math.Round(prediction, 3)}, Change: {change}";
 
                      Program.Logger.Info(message);
@@ -196,10 +221,11 @@ namespace PropertyPrices
         {
             var net = new NeuralNet();
             net.Add(new InputLayer(inputUnits: numberOfFeatures));
-            net.Add(new DenseLayer(numberOfFeatures, Activation.Relu));
+            net.Add(new DenseLayer(numberOfFeatures, Activation.Relu) { BatchNormalization = true });
             net.Add(new SquaredErrorRegressionLayer());
 
-            var learner = new RegressionNeuralNetLearner(net, learningRate: 0.01, iterations: iterations ?? _iterations, loss: new SquareLoss(), batchSize: batchSize, optimizerMethod: OptimizerMethod.RMSProp);
+            var learner = new RegressionNeuralNetLearner(net, learningRate: 0.01, iterations: iterations ?? _iterations, loss: new SquareLoss(), batchSize: batchSize,
+                optimizerMethod: OptimizerMethod.RMSProp);
 
             return learner;
         }
@@ -217,7 +243,7 @@ namespace PropertyPrices
 
         private ILearner<double> GetAda(int? iterations = null)
         {
-            return new RegressionAdaBoostLearner(maximumTreeDepth: 35, iterations: iterations ?? _iterations, learningRate: 0.1, loss: AdaBoostRegressionLoss.Squared);
+            return new RegressionAdaBoostLearner(maximumTreeDepth: 35, iterations: iterations ?? _iterations, learningRate: 0.1, loss: AdaBoostRegressionLoss.Squared, seed: 42);
         }
 
         private ILearner<double> GetEnsemble(int numberOfFeatures, int batchSize)
@@ -225,8 +251,8 @@ namespace PropertyPrices
             return new RegressionEnsembleLearner(
                 new IIndexedLearner<double>[]
                 {
-                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 1800),
-                    (IIndexedLearner<double>)GetAda(400),
+                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 1600),
+                    (IIndexedLearner<double>)GetAda(300),
                 },
                 seed: 42
             );
