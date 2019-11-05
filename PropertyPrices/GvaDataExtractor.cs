@@ -17,30 +17,30 @@ namespace PropertyPrices
             _path = path;
         }
 
-        public Dictionary<string, IEnumerable<FeatureData>> Extract()
+        public Dictionary<int, IEnumerable<FeatureData>> Extract()
         {
 
-            var parser = new CsvParser(() => new StringReader(File.ReadAllText(_path)), ',', true, false);
+            var lines = File.ReadAllLines(_path);
 
-            var featureRows = parser.EnumerateRows().ToArray();
+            var data = new Dictionary<int, IEnumerable<FeatureData>>();
 
-            var data = new Dictionary<string, IEnumerable<FeatureData>>();
-
-            foreach (var row in featureRows)
+            foreach (var row in lines.Skip(8))
             {
+                var values = row.Split(',').Select(s => s.Trim('"')).ToArray();
 
-                if (row.Values[0].Length == 4 && int.TryParse(row.Values[0], out var parsed))
+                if (values[0].Length == 4 && int.TryParse(values[0], out var parsed))
                 {
-                    data.Add(parsed.ToString(), new[] { new FeatureData { FeatureValue = new[] { double.Parse(row.Values[1]) }, Year = parsed } });
+                    data.Add(parsed, new[] { new FeatureData { FeatureValue = new[] { double.Parse(values[1]) }, Year = parsed } });
                 }
             }
 
             _minimumYear = data.Values.Min(d => d.Min(m => m.Year));
 
             return data;
+
         }
 
-        public IEnumerable<double> Get(Dictionary<string, IEnumerable<FeatureData>> data, ModelData modelData)
+        public IEnumerable<double> Get(Dictionary<int, IEnumerable<FeatureData>> data, ModelData modelData)
         {
             var year = modelData.Date.Year - 1;
 
@@ -49,12 +49,12 @@ namespace PropertyPrices
                 return new[] { -1d };
             }
 
-            if (data.ContainsKey(year.ToString()))
+            if (data.ContainsKey(year))
             {
-                return data[year.ToString()].Single().FeatureValue;
+                return data[year].Single().FeatureValue;
             }
 
-            Program.StatusLogger.Info($"Population data not found: {modelData.Name} {modelData.Date}");
+            Program.StatusLogger.Info($"GVA data not found: {modelData.Name} {modelData.Date}");
 
             return new[] { -1d };
         }

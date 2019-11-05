@@ -36,14 +36,18 @@ namespace PropertyPrices
 
         static string[] excludeColumns = { "RegionName", "AreaCode" };
 
-        public static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington and Chelsea", "Kingston upon Thames", "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", "City of Westminster" };
+        public static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "City of London",  "City of Westminster", 
+            "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", 
+            "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington And Chelsea", "Kingston upon Thames", 
+            "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", 
+            "London" };
 
         double _totalError = 0;
         double _totalCrossError = 0;
         string _targetName = "FlatPrice";
-        const int _targetOffset = 1;
-        const int DefaultNNIterations = 1600;//NN
-        const int DefaultAdaIterations = 300;//ada
+        const int _targetOffset = 10;
+        const int DefaultNNIterations = 1600;
+        const int DefaultAdaIterations = 300;
         private int _iterations = DefaultNNIterations;
         static object Locker = new object();
 
@@ -83,7 +87,7 @@ namespace PropertyPrices
                 var populationData = _populationDataExtractor.Extract();
                 var otherPopulationData = _otherPopulationDataExtractor.Extract();
                 var densityData = _londonDensityDataExtractor.Extract();
-                //var gvaData = _gvaDataExtractor.Extract();
+                var gvaData = _gvaDataExtractor.Extract();
 
                 var featureRows = parser.EnumerateRows().ToArray();
                 var targets = parser.EnumerateRows(_targetName).ToArray();
@@ -128,7 +132,7 @@ namespace PropertyPrices
                         .Concat(_populationDataExtractor.Get(populationData, modelData))
                         .Concat(_londonDensityDataExtractor.Get(densityData, modelData))
                         .Concat(_otherPopulationDataExtractor.Get(otherPopulationData, modelData))
-                        //.Concat(_gvaDataExtractor.Get(gvaData, modelData))
+                        .Concat(_gvaDataExtractor.Get(gvaData, modelData))
                         .ToArray();
 
                     data.TryAdd(i, modelData);
@@ -251,8 +255,8 @@ namespace PropertyPrices
             return new RegressionEnsembleLearner(
                 new IIndexedLearner<double>[]
                 {
-                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 1600),
-                    (IIndexedLearner<double>)GetAda(300),
+                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 1800),
+                    (IIndexedLearner<double>)GetAda(400),
                 },
                 seed: 42
             );

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{DA7A21FA-8162-4350-AD77-A8D1B671F3ED}") = "PropertyPrices.Plots", "PropertyPrices.Plots\PropertyPrices.Plots.rxproj", "{49E26692-C49A-4EA9-A933-8F51D6DFDE72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49E26692-C49A-4EA9-A933-8F51D6DFDE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E26692-C49A-4EA9-A933-8F51D6DFDE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E26692-C49A-4EA9-A933-8F51D6DFDE72}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E26692-C49A-4EA9-A933-8F51D6DFDE72}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {114B376C-73A1-46D0-A670-926149F3A9EF}
+	EndGlobalSection
+EndGlobal
