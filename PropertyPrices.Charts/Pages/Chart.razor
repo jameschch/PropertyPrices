@@ -2,5 +2,23 @@
 @inject Microsoft.JSInterop.IJSRuntime JSRuntime
 @inherits PropertyPrices.Charts.Pages.ChartPage
 
+<div id="toolbar" class="row">
+    <div class="col-4">
+        <select value="@Column" @onchange="@ColumnChange">
+            @foreach (var item in ColumnOptions)
+            {
+                <option value=@item.Key>@item.Value</option>
+            }
+        </select>
+    </div>
+    <div class="col-4">
+        <div class="btn-group">
+            <button type="button" class="btn btn-light btn-sm" @onclick="@LightClick">Light</button>
+            <button type="button" class="btn btn-secondary btn-sm" @onclick="@DarkClick">Dark</button>
+        </div>
+        <input type="hidden" id="selectedLayout" @bind="@SelectedLayout" />
+    </div>
+</div>
+
 <div id="graph"></div>
 
