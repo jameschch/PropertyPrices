@@ -1,5 +1,6 @@
 ﻿using Blazor.DynamicJavascriptRuntime.Evaluator;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace PropertyPrices.Charts.Pages
         public IJSRuntime JSRuntime { get; set; }
         [Inject]
         public HttpClient HttpClient { get; set; }
+        [Inject]
+        public IConfigurationRoot Config { get; set; }
 
         public Dictionary<string, string> ColumnOptions { get; } = new Dictionary<string, string>{ {"X12m.Change","12m % Change"},{"X1m.Change","1m % Change"},{"AveragePrice","Average Price"},
             {"AveragePriceSA","Average Price SA"},{"Cash12m.Change","Cash 12m % Change"},{"Cash1m.Change","Cash 1m % Change"},{"CashIndex","Cash Index"},{"CashPrice","Cash Price"},
@@ -47,7 +50,7 @@ namespace PropertyPrices.Charts.Pages
 
         private async Task NewPlot(string id)
         {
-            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"http://localhost:63125/api/PropertyPrices/" + id))))
+            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config.GetSection("BaseUrl").Value}/api/PropertyPrices/" + id))))
             {
                 await JSRuntime.InvokeAsync<dynamic>("PlotlyInterop.newPlot", reader.ReadToEnd());
             }
