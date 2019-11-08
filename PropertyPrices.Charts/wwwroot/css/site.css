@@ -5,13 +5,29 @@ html, body {
 }
 
 body {
+    font-size: 0.8rem;
     height: 100%;
     width: 100%;
     position: absolute;
     background-color: #fff;
 }
 
-.container-fluid,
+h1 {
+    text-align: center;
+    font-size: 1rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+#sources {
+    font-size: smaller;
+    list-style: none;
+    padding-left: 0;
+}
+
+/*.container-fluid,
 .row-fluid,
 app {
     height: inherit;
@@ -21,12 +37,12 @@ app {
     position: relative;
     display: flex;
     flex-direction: column;
-}
+}*/
 
-#toolbar {
+/*#toolbar {
     height: 5%;
 }
 
 #graph {
     height: 90%;
-}
+}*/

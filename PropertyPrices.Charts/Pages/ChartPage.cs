@@ -1,6 +1,5 @@
 ﻿using Blazor.DynamicJavascriptRuntime.Evaluator;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace PropertyPrices.Charts.Pages
         [Inject]
         public HttpClient HttpClient { get; set; }
         [Inject]
-        public IConfigurationRoot Config { get; set; }
+        public Configuration Config { get; set; }
 
         public Dictionary<string, string> ColumnOptions { get; } = new Dictionary<string, string>{ {"X12m.Change","12m % Change"},{"X1m.Change","1m % Change"},{"AveragePrice","Average Price"},
             {"AveragePriceSA","Average Price SA"},{"Cash12m.Change","Cash 12m % Change"},{"Cash1m.Change","Cash 1m % Change"},{"CashIndex","Cash Index"},{"CashPrice","Cash Price"},
@@ -37,6 +36,7 @@ namespace PropertyPrices.Charts.Pages
 
         public string Column { get; set; } = "AveragePrice";
         public string SelectedLayout { get; set; } = "lightLayout";
+        private bool _selectedLayoutChanged = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,7 +50,12 @@ namespace PropertyPrices.Charts.Pages
 
         private async Task NewPlot(string id)
         {
-            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config.GetSection("BaseUrl").Value}/api/PropertyPrices/" + id))))
+            if (_selectedLayoutChanged)
+            {
+                ToggleTheme();
+            }
+
+            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["BaseUrl"]}/api/PropertyPrices/" + id))))
             {
                 await JSRuntime.InvokeAsync<dynamic>("PlotlyInterop.newPlot", reader.ReadToEnd());
             }
@@ -61,20 +66,9 @@ namespace PropertyPrices.Charts.Pages
         {
             if (SelectedLayout != "lightLayout")
             {
-                using (dynamic context = new EvalContext(JSRuntime))
-                {
-                    (context as EvalContext).Expression = () => context.jQuery("body").fadeOut();
-                }
-
-                StateHasChanged();
-
                 SelectedLayout = "lightLayout";
+                _selectedLayoutChanged = true;
                 await NewPlot(Column);
-
-                using (dynamic context = new EvalContext(JSRuntime))
-                {
-                    (context as EvalContext).Expression = () => context.jQuery("body").fadeIn();
-                }
             }
         }
 
@@ -82,22 +76,29 @@ namespace PropertyPrices.Charts.Pages
         {
             if (SelectedLayout != "darkLayout")
             {
-                using (dynamic context = new EvalContext(JSRuntime))
-                {
-                    (context as EvalContext).Expression = () => context.jQuery("body").fadeOut();
-                }
-
-                StateHasChanged();
-
                 SelectedLayout = "darkLayout";
+                _selectedLayoutChanged = true;
                 await NewPlot(Column);
-
-                using (dynamic context = new EvalContext(JSRuntime))
-                {
-                    (context as EvalContext).Expression = () => context.jQuery("body").fadeIn();
-                }
             }
         }
 
+        private void ToggleTheme()
+        {
+            var background = "#000";
+            var foreground = "#fff";
+
+            if (SelectedLayout == "lightLayout")
+            {
+                background = "#fff";
+                foreground = "#000";
+            }
+
+            using (dynamic context = new EvalContext(JSRuntime))
+            {
+                (context as EvalContext).Expression = () => context.PlotlyInterop.toggleTheme(foreground, background);
+            }
+
+            _selectedLayoutChanged = false;
+        }
     }
 }
