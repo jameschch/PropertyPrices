@@ -9,10 +9,11 @@ namespace PropertyPrices.Charts
     {
         public Configuration()
         {
+            this.Add("BaseUrl", "https://propertyprices.org.uk");
 #if DEBUG
-            this.Add("BaseUrl", "http://localhost:63125");
+            this.Add("ApiUrl", "http://localhost:63125");
 #else
-            this.Add("BaseUrl", "https://");
+            this.Add("ApiUrl", "https://api.propertyprices.org.uk");
 #endif
         }
 

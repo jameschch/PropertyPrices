@@ -55,7 +55,7 @@ namespace PropertyPrices.Charts.Pages
                 ToggleTheme();
             }
 
-            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["BaseUrl"]}/api/PropertyPrices/" + id))))
+            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["ApiUrl"]}/api/PropertyPrices/" + id))))
             {
                 await JSRuntime.InvokeAsync<dynamic>("PlotlyInterop.newPlot", reader.ReadToEnd());
             }
