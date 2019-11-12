@@ -1,6 +1,7 @@
 ﻿using Blazor.DynamicJavascriptRuntime.Evaluator;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using PropertyPrices.Charts.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,7 @@ namespace PropertyPrices.Charts.Pages
         public HttpClient HttpClient { get; set; }
         [Inject]
         public Configuration Config { get; set; }
+        protected Wait Wait { get; set; }
 
         public Dictionary<string, string> ColumnOptions { get; } = new Dictionary<string, string>{ {"X12m.Change","12m % Change"},{"X1m.Change","1m % Change"},{"AveragePrice","Average Price"},
             {"AveragePriceSA","Average Price SA"},{"Cash12m.Change","Cash 12m % Change"},{"Cash1m.Change","Cash 1m % Change"},{"CashIndex","Cash Index"},{"CashPrice","Cash Price"},
@@ -36,11 +38,18 @@ namespace PropertyPrices.Charts.Pages
 
         public string Column { get; set; } = "AveragePrice";
         public string SelectedLayout { get; set; } = "lightLayout";
-        private bool _selectedLayoutChanged = false;
 
         protected override async Task OnInitializedAsync()
         {
-            await NewPlot("AveragePrice");
+
+        }
+
+        protected async override Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await NewPlot("AveragePrice");
+            }
         }
 
         public async Task ColumnChange(ChangeEventArgs e)
@@ -50,16 +59,20 @@ namespace PropertyPrices.Charts.Pages
 
         private async Task NewPlot(string id)
         {
-            if (_selectedLayoutChanged)
+            Wait.Show();
+            try
             {
-                ToggleTheme();
+                using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["ApiUrl"]}/api/PropertyPrices/" + id))))
+                {
+                    await JSRuntime.InvokeAsync<dynamic>("PlotlyInterop.newPlot", reader.ReadToEnd());
+                }
+                Column = id;
+            }
+            finally
+            {
+                Wait.Hide();
             }
 
-            using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["ApiUrl"]}/api/PropertyPrices/" + id))))
-            {
-                await JSRuntime.InvokeAsync<dynamic>("PlotlyInterop.newPlot", reader.ReadToEnd());
-            }
-            Column = id;
         }
 
         public async Task LightClick()
@@ -67,8 +80,7 @@ namespace PropertyPrices.Charts.Pages
             if (SelectedLayout != "lightLayout")
             {
                 SelectedLayout = "lightLayout";
-                _selectedLayoutChanged = true;
-                await NewPlot(Column);
+                ToggleTheme();
             }
         }
 
@@ -77,8 +89,7 @@ namespace PropertyPrices.Charts.Pages
             if (SelectedLayout != "darkLayout")
             {
                 SelectedLayout = "darkLayout";
-                _selectedLayoutChanged = true;
-                await NewPlot(Column);
+                ToggleTheme();
             }
         }
 
@@ -97,8 +108,6 @@ namespace PropertyPrices.Charts.Pages
             {
                 (context as EvalContext).Expression = () => context.PlotlyInterop.toggleTheme(foreground, background);
             }
-
-            _selectedLayoutChanged = false;
         }
     }
 }

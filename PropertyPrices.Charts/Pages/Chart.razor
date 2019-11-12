@@ -5,50 +5,54 @@
 
 <header>
 
-    <nav class="navbar navbar-expand-sm bg-light">
+    <div class="row">
+        <nav class="navbar navbar-expand-sm bg-light w-100">
 
-        <ul class="navbar-nav mr-auto justify-content-center align-items-center text-center">
-            <li class="nav-item">
-                <h1 class="d-none d-md-block d-lg-block navbar-brand align-middle">London Property Prices 1968 - 2019</h1>
-            </li>
-            <li class="nav-item pr-1">
-                <select class="align-middle" value="@Column" @onchange="@ColumnChange">
-                    @foreach (var item in ColumnOptions)
-                    {
-                        <option value=@item.Key>@item.Value</option>
-                    }
-                </select>
-            </li>
-            <li class="nav-item pr-1">
-                <div class="btn-group align-middle">
-                    <button type="button" class="btn btn-primary btn-sm active">1968-2019 Historical Data</button>
-                    <button type="button" class="btn btn-sm btn-success">2019-2029 Forecast Data</button>
-                </div>
-            </li>
-            <li class="nav-item pr-1">
-                <div class="btn-group align-middle">
-                    <button type="button" class="btn btn-light btn-sm active" @onclick="@LightClick">Light</button>
-                    <button type="button" class="btn btn-secondary btn-sm" @onclick="@DarkClick">Dark</button>
-                </div>
-            </li>
-        </ul>
-        @*<ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-                <a class="nav-link"><i class="fab fa-facebook-f"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"><i class="fab fa-twitter"></i></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link"><i class="fab fa-instagram"></i></a>
-            </li>
-        </ul>*@
-    </nav>
+            <ul class="navbar-nav mr-auto justify-content-center align-items-center text-center">
+                <li class="nav-item">
+                    <h1 class="d-none d-md-block d-lg-block navbar-brand align-middle">London Property Prices 1968 - 2019</h1>
+                </li>
+                <li class="nav-item pr-1">
+                    <select class="align-middle" value="@Column" @onchange="@ColumnChange">
+                        @foreach (var item in ColumnOptions)
+                        {
+                            <option value=@item.Key>@item.Value</option>
+                        }
+                    </select>
+                </li>
+                <li class="nav-item pr-1">
+                    <div class="btn-group align-middle">
+                        <button type="button" class="btn btn-primary btn-sm active">1968-2019 Historical Data</button>
+                        <button type="button" class="btn btn-sm btn-success">2019-2029 Forecast Data</button>
+                    </div>
+                </li>
+                <li class="nav-item pr-1">
+                    <div class="btn-group align-middle">
+                        <button type="button" class="btn btn-light btn-sm active" @onclick="@LightClick">Light</button>
+                        <button type="button" class="btn btn-secondary btn-sm" @onclick="@DarkClick">Dark</button>
+                    </div>
+                </li>
+            </ul>
+            @*<ul class="navbar-nav nav-flex-icons">
+                <li class="nav-item">
+                    <a class="nav-link"><i class="fab fa-facebook-f"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"><i class="fab fa-instagram"></i></a>
+                </li>
+            </ul>*@
+        </nav>
+    </div>
 
     <input type="hidden" id="selectedLayout" @bind="@SelectedLayout" />
 </header>
 
 <div id="graph" class="row h-75"></div>
+
+<Wait @ref="Wait"></Wait>
 
 <footer>
     <Sources />

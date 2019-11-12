@@ -1,6 +1,6 @@
 ﻿window.PlotlyInterop = {
 
-   layout: function (isDark) {
+    layout: function (isDark) {
         return {
             "margin": {
                 "b": 0,
@@ -8,10 +8,10 @@
                 "t": 20,
                 "r": 30
             },
-            "plot_bgcolor": isDark ? "#000" :"#fff",
-            "paper_bgcolor": isDark ? "#000" :"#fff",
+            "plot_bgcolor": isDark ? "#000" : "#fff",
+            "paper_bgcolor": isDark ? "#000" : "#fff",
             "family": "Roboto, Helvetica, Arial, sans-serif",
-            "font": { "color": isDark ? "#fff" :"#000" },
+            "font": { "color": isDark ? "#fff" : "#000" },
             "xaxis": {
                 "domain": [0, 1],
                 "automargin": true,
@@ -27,24 +27,22 @@
         };
 
     },
- 
+
     selectedLayout: function () {
         return this.layout($("#selectedLayout").val() === "darkLayout");
     },
 
     toggleTheme: function (foreground, background) {
-
-        jQuery("body").fadeOut(500, function () {
-            jQuery("body").css("background-color", background);
-            jQuery("h1, h2, h3, body, p").css("color", foreground);
-        });
+        jQuery("body").css("background-color", background);
+        jQuery("h2, h3, body, p").css("color", foreground);
+        jQuery("h1").css("color", "#000");
+        Plotly.relayout(document.getElementById("graph"), PlotlyInterop.selectedLayout());
     },
 
     newPlot: function (data) {
         //console.log(data);
         Plotly.newPlot(document.getElementById("graph"), JSON.parse(data), PlotlyInterop.selectedLayout(), { responsive: true, displayModeBar: true, showSendToCloud: false, displaylogo: false });
 
-        jQuery("body").fadeIn();
         return true;
     }
 };
