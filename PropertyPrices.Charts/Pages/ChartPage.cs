@@ -15,6 +15,8 @@ namespace PropertyPrices.Charts.Pages
     public class ChartPage : ComponentBase
     {
 
+        private string _controller = "PropertyPrices";
+
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
         [Inject]
@@ -62,7 +64,7 @@ namespace PropertyPrices.Charts.Pages
             Wait.Show();
             try
             {
-                using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["ApiUrl"]}/api/PropertyPrices/" + id))))
+                using (var reader = new StreamReader((await HttpClient.GetStreamAsync($"{Config["ApiUrl"]}/api/{_controller}/" + id))))
                 {
                     await JSRuntime.InvokeAsync<dynamic>("PlotlyInterop.newPlot", reader.ReadToEnd());
                 }
@@ -72,7 +74,6 @@ namespace PropertyPrices.Charts.Pages
             {
                 Wait.Hide();
             }
-
         }
 
         public async Task LightClick()
@@ -109,5 +110,25 @@ namespace PropertyPrices.Charts.Pages
                 (context as EvalContext).Expression = () => context.PlotlyInterop.toggleTheme(foreground, background);
             }
         }
+
+
+        public async Task HistoricalClick()
+        {
+            if (_controller != "PropertyPrices")
+            {
+                _controller = "PropertyPrices";
+                await NewPlot(Column);
+            }
+        }
+
+        public async Task ForecastClick()
+        {
+            if (_controller != "Forecast")
+            {
+                _controller = "Forecast";
+                await NewPlot(Column);
+            }
+        }
+
     }
 }
