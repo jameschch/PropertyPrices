@@ -31,7 +31,7 @@ namespace PropertyPrices
 {
     //https://arxiv.org/ftp/arxiv/papers/1802/1802.08238.pdf
     //GVA, Population density, income
-    class PricePredictionRanker
+    public class PricePredictionRanker
     {
 
         static string[] excludeColumns = { "RegionName", "AreaCode" };
@@ -45,7 +45,8 @@ namespace PropertyPrices
         double _totalError = 0;
         double _totalCrossError = 0;
         string _targetName = "FlatPrice";
-        const int _targetOffset = 10;
+        int _targetOffset;
+        const string DefaultTargetName = "FlatPrice";
         const int DefaultNNIterations = 1600;
         const int DefaultAdaIterations = 300;
         private int _iterations = DefaultNNIterations;
@@ -58,9 +59,11 @@ namespace PropertyPrices
         private GvaDataExtractor _gvaDataExtractor = new GvaDataExtractor();
         private TargetExtractor _targetExtractor = new TargetExtractor();
 
-        public void Predict(int iterations = DefaultNNIterations)
+        public void Predict(int iterations = DefaultNNIterations, int targetOffset = 10, string targetName = DefaultTargetName)
         {
             _iterations = iterations;
+            _targetName = targetName;
+            _targetOffset = targetOffset;
 
             Program.StatusLogger.Info($"Iterations: {_iterations}");
             Program.StatusLogger.Info($"Target: {_targetName}");
@@ -211,14 +214,14 @@ namespace PropertyPrices
                      }
                      var isLondon = London.Contains(grouping.First().Value.Name);
 
-                     var message = $"TotalError: {Math.Round(_totalError, 3)}, AverageError: {averageError}, Region: {grouping.First().Value.Name}, London: {isLondon}, Error: {Math.Round(error, 3)}, Next: {Math.Round(prediction, 3)}, Change: {change}";
+                     var message = $"TotalError: {Math.Round(_totalError, 3)}, AverageError: {averageError}, Target: {_targetName}, Offset: {_targetOffset}, Region: {grouping.First().Value.Name}, London: {isLondon}, Error: {Math.Round(error, 3)}, Next: {Math.Round(prediction, 3)}, Change: {change}";
 
                      Program.Logger.Info(message);
                  }
              });
 
-            Console.WriteLine("Press any key to continue");
-            Console.ReadKey();
+            //Console.WriteLine("Press any key to continue");
+            //Console.ReadKey();
         }
 
         private ILearner<double> GetNeuralNet(int numberOfFeatures, int batchSize, int? iterations = null)
@@ -255,8 +258,8 @@ namespace PropertyPrices
             return new RegressionEnsembleLearner(
                 new IIndexedLearner<double>[]
                 {
-                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 1800),
-                    (IIndexedLearner<double>)GetAda(400),
+                    (IIndexedLearner<double>)GetNeuralNet(numberOfFeatures, batchSize, 2000),
+                    (IIndexedLearner<double>)GetAda(500),
                 },
                 seed: 42
             );
