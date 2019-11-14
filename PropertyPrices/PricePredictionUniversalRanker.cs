@@ -38,7 +38,7 @@ namespace PropertyPrices
 
         private BinaryFeatureEncoder _binaryFeatureEncoder = new BinaryFeatureEncoder();
         private CreditDataExtractor _creditDataExtractor = new CreditDataExtractor();
-        private TargetExtractor _targetExtractor = new TargetExtractor();
+        private TargetCalculator _targetExtractor = new TargetCalculator();
 
         public void Predict(int iterations = DefaultIterations)
         {
@@ -101,7 +101,7 @@ namespace PropertyPrices
                     data.TryAdd(i, new ModelData { Name = key, Date = date, Observations = regionFeatures.ToArray(), OriginalTarget = ParseRowValue(item.GetValue(_targetName)) });
                 }
 
-                _targetExtractor.Extract(data, _targetOffset);
+                _targetExtractor.Calculate(data, _targetOffset);
 
 
                 //TypeSerializer.SerializeToWriter<ConcurrentDictionary<int, ModelData>>(data, new StreamWriter(Path()));

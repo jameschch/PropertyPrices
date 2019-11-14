@@ -8,7 +8,7 @@ namespace PropertyPrices
         public string Code;
         public DateTime Date;
         public double[] Observations;
-        public double OriginalTarget;
+        public double? OriginalTarget;
         public double Target = -1;
     }
 

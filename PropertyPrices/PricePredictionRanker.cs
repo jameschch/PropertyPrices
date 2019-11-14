@@ -36,10 +36,10 @@ namespace PropertyPrices
 
         static string[] excludeColumns = { "RegionName", "AreaCode" };
 
-        public static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "City of London",  "City of Westminster", 
-            "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney", 
-            "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington And Chelsea", "Kingston upon Thames", 
-            "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth", 
+        public static string[] London = { "Barking and Dagenham", "Barnet", "Bexley", "Brent", "Bromley", "Camden", "City of London",  "City of Westminster",
+            "Croydon", "Ealing", "Enfield", "Greenwich", "Hackney",
+            "Hammersmith and Fulham", "Haringey", "Harrow", "Havering", "Hillingdon", "Hounslow", "Islington", "Kensington And Chelsea", "Kingston upon Thames",
+            "Lambeth", "Lewisham", "Merton", "Newham", "Redbridge", "Richmond upon Thames", "Southwark", "Sutton", "Tower Hamlets", "Waltham Forest", "Wandsworth",
             "London" };
 
         double _totalError = 0;
@@ -57,9 +57,9 @@ namespace PropertyPrices
         private PopulationDataExtractor _otherPopulationDataExtractor = new PopulationDataExtractor("MYEB3_summary_components_of_change_series_UK_(2018).csv", "ladcode18", "laname18");
         private LondonDensityDataExtractor _londonDensityDataExtractor = new LondonDensityDataExtractor();
         private GvaDataExtractor _gvaDataExtractor = new GvaDataExtractor();
-        private TargetExtractor _targetExtractor = new TargetExtractor();
+        private TargetCalculator _targetCalculator = new TargetCalculator();
 
-        public void Predict(int iterations = DefaultNNIterations, int targetOffset = 10, string targetName = DefaultTargetName)
+        public void Predict(int iterations = DefaultNNIterations, int targetOffset = 1, string targetName = DefaultTargetName, bool pauseAtEnd = false)
         {
             _iterations = iterations;
             _targetName = targetName;
@@ -128,7 +128,7 @@ namespace PropertyPrices
                         Code = item.GetValue("AreaCode"),
                         Date = date,
                         Observations = regionFeatures.ToArray(),
-                        OriginalTarget = ParseRowValue(item.GetValue(_targetName))
+                        OriginalTarget = ParseTarget(item.GetValue(_targetName))
                     };
 
                     modelData.Observations = modelData.Observations
@@ -141,7 +141,7 @@ namespace PropertyPrices
                     data.TryAdd(i, modelData);
                 }
 
-                _targetExtractor.Extract(data, _targetOffset);
+                _targetCalculator.Calculate(data, _targetOffset);
 
 
                 //TypeSerializer.SerializeToWriter<ConcurrentDictionary<int, ModelData>>(data, new StreamWriter(Path()));
@@ -154,7 +154,7 @@ namespace PropertyPrices
              {
 
                  var lastDate = grouping.Last().Value.Date;
-                 var dataWithTarget = grouping.Where(s => s.Value.Target != -1);
+                 var dataWithTarget = grouping.Where(s => s.Value.OriginalTarget.HasValue && s.Value.Target != -1);
 
                  if (dataWithTarget.Any())
                  {
@@ -220,8 +220,11 @@ namespace PropertyPrices
                  }
              });
 
-            //Console.WriteLine("Press any key to continue");
-            //Console.ReadKey();
+            if (pauseAtEnd)
+            {
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
+            }
         }
 
         private ILearner<double> GetNeuralNet(int numberOfFeatures, int batchSize, int? iterations = null)
@@ -263,6 +266,17 @@ namespace PropertyPrices
                 },
                 seed: 42
             );
+        }
+
+        private double? ParseTarget(string value)
+        {
+            var parsed = ParseRowValue(value);
+            if (parsed == -1d)
+            {
+                return null;
+            }
+
+            return parsed;
         }
 
         private double ParseRowValue(string value)
