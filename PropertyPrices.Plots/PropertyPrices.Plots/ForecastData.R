@@ -3,6 +3,8 @@ library(htmlwidgets)
 library(htmltools)
 library(rvest)
 library(jsonlite)
+library(tidyr)
+#library(dplyr)
 
 allData <- read.csv("C:/Source/Repos/PropertyPrices/PropertyPrices.Batcher/bin/x64/Release/netcoreapp3.0/log.txt", header = FALSE, sep = ",",)
 sep = tidyr::separate(allData[,], 3, c("key", "Target"), sep = ":")
@@ -41,3 +43,6 @@ allPlots[4]
 allPlots[5]
 allPlots[6]
 allPlots[7]
+allPlots[8]
+allPlots[9]
+allPlots[10]

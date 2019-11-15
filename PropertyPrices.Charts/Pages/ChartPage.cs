@@ -38,12 +38,16 @@ namespace PropertyPrices.Charts.Pages
             {"SemiDetachedIndex","Semi-Detached Index"},{"SemiDetachedPrice","Semi-Detached Price"},{"Terraced12m.Change","Terraced 12m % Change"},{"Terraced1m.Change","Terraced 1m % Change"},
             {"TerracedIndex","Terraced Index"},{"TerracedPrice","Terraced Price"}};
 
+        public Dictionary<string, string> ForecastColumnOptions { get; set; }
+
         public string Column { get; set; } = "AveragePrice";
         public string SelectedLayout { get; set; } = "lightLayout";
+        public string HistoricalClass = "align-middle";
+        public string ForecastClass = "d-none";
 
         protected override async Task OnInitializedAsync()
         {
-
+            ForecastColumnOptions = GetFilteredColumnOptions();
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -57,6 +61,7 @@ namespace PropertyPrices.Charts.Pages
         public async Task ColumnChange(ChangeEventArgs e)
         {
             await NewPlot(e.Value.ToString());
+            Column = e.Value.ToString();
         }
 
         private async Task NewPlot(string id)
@@ -114,8 +119,16 @@ namespace PropertyPrices.Charts.Pages
 
         public async Task HistoricalClick()
         {
+
             if (_controller != "PropertyPrices")
             {
+                using (dynamic context = new EvalContext(JSRuntime))
+                {
+                    (context as EvalContext).Expression = () => context.Jquery("#historicalSelect").val(Column);
+                }
+
+                HistoricalClass = "align-middle";
+                ForecastClass = "d-none";
                 _controller = "PropertyPrices";
                 await NewPlot(Column);
             }
@@ -125,9 +138,24 @@ namespace PropertyPrices.Charts.Pages
         {
             if (_controller != "Forecast")
             {
+                if (ForecastColumnOptions.ContainsValue(Column))
+                {
+                    using (dynamic context = new EvalContext(JSRuntime))
+                    {
+                        (context as EvalContext).Expression = () => context.Jquery("#forecastSelect").val(Column);
+                    }
+                }
+
+                HistoricalClass = "d-none";
+                ForecastClass = "align-middle";
                 _controller = "Forecast";
                 await NewPlot(Column);
             }
+        }
+
+        private Dictionary<string, string> GetFilteredColumnOptions()
+        {
+            return ColumnOptions.Where(w => !w.Value.Contains("%")).ToDictionary(k => k.Key, v => v.Value);
         }
 
     }

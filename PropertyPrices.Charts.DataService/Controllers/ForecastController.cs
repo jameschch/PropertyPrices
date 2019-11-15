@@ -24,7 +24,7 @@ namespace PropertyPrices.Charts.DataService
         [Route("{id}")]
         public ContentResult Get(string id)
         {
-            var json = System.IO.File.ReadAllText($"forecastData\\{id}.json");
+            var json = System.IO.File.ReadAllText($"ForecastData\\{id}.json");
             return Content(json, "application/json");
         }
     }

@@ -13,8 +13,14 @@
                     <h1 class="d-none d-md-block d-lg-block navbar-brand align-middle">London Property Prices 1968 - 2019</h1>
                 </li>
                 <li class="nav-item pr-1">
-                    <select class="align-middle" value="@Column" @onchange="@ColumnChange">
+                    <select id="historicalSelect" class="@HistoricalClass" @onchange="@ColumnChange">
                         @foreach (var item in ColumnOptions)
+                        {
+                            <option value=@item.Key>@item.Value</option>
+                        }
+                    </select>
+                    <select id="forecastSelect" class="@ForecastClass" @onchange="@ColumnChange">
+                        @foreach (var item in ForecastColumnOptions)
                         {
                             <option value=@item.Key>@item.Value</option>
                         }

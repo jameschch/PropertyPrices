@@ -1,0 +1,1 @@
+[{"x":["2020-06-30","2022-06-30","2024-06-30","2029-06-30"],"y":[4.4,11.4,17.2,42.7],"mode":"lines+markers","type":"scatter","name":"London","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y"}]
