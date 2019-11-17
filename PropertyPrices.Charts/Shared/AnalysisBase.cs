@@ -4,10 +4,12 @@ using Microsoft.JSInterop;
 
 namespace PropertyPrices.Charts.Shared
 {
-    public class WaitBase : ComponentBase
+
+    //todo: inherit wait common base
+    public class AnalysisBase : ComponentBase
     {
 
-        protected virtual string Selector { get; set; } = "#wait";
+        protected virtual string Selector { get; set; } = "#analysis";
 
         [Inject] public IJSRuntime JsRuntime { get; set; }
 

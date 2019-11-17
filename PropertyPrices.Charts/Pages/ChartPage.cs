@@ -24,6 +24,7 @@ namespace PropertyPrices.Charts.Pages
         [Inject]
         public Configuration Config { get; set; }
         protected Wait Wait { get; set; }
+        protected Analysis Analysis { get; set; }
 
         public Dictionary<string, string> ColumnOptions { get; } = new Dictionary<string, string>{ {"X12m.Change","12m % Change"},{"X1m.Change","1m % Change"},{"AveragePrice","Average Price"},
             {"AveragePriceSA","Average Price SA"},{"Cash12m.Change","Cash 12m % Change"},{"Cash1m.Change","Cash 1m % Change"},{"CashIndex","Cash Index"},{"CashPrice","Cash Price"},
@@ -89,7 +90,6 @@ namespace PropertyPrices.Charts.Pages
                 ToggleTheme();
             }
         }
-
         public async Task DarkClick()
         {
             if (SelectedLayout != "darkLayout")
@@ -116,7 +116,6 @@ namespace PropertyPrices.Charts.Pages
             }
         }
 
-
         public async Task HistoricalClick()
         {
 
@@ -133,7 +132,6 @@ namespace PropertyPrices.Charts.Pages
                 await NewPlot(Column);
             }
         }
-
         public async Task ForecastClick()
         {
             if (_controller != "Forecast")
@@ -157,6 +155,12 @@ namespace PropertyPrices.Charts.Pages
         {
             return ColumnOptions.Where(w => !w.Value.Contains("%")).ToDictionary(k => k.Key, v => v.Value);
         }
+
+        public async Task AnalysisClick()
+        {
+            Analysis.Show();
+        }
+
 
     }
 }

@@ -36,7 +36,7 @@ h3 {
     z-index: 12;
 }
 
-#wait {
+#wait, #analysis {
     position: fixed;
     z-index: 2;
     top: 0;
@@ -44,6 +44,22 @@ h3 {
     bottom: 0;
     right: 0;
     background: rgba(0,0,0,.7);
+    padding: 5%;
+}
+
+.article {
+    padding: 5%;
+    overflow-y: scroll;
+    height: 95%;
+}
+
+.twoColumns {
+    -webkit-column-gap: 20px;
+    -moz-column-gap: 20px;
+    column-gap: 20px;
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
 }
 
 #floatingCirclesG {
