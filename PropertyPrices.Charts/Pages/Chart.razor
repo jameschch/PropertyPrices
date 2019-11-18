@@ -38,18 +38,23 @@
                         <button type="button" class="btn btn-secondary btn-sm" @onclick="@DarkClick">Dark</button>
                     </div>
                 </li>
+                <li class="nav-item pr-1">
+                    <div class="btn-group align-middle">
+                        <button type="button" class="btn btn-sm" @onclick="@AnalysisClick">Forecast Analysis</button>
+                    </div>
+                </li>
             </ul>
             @*<ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fab fa-facebook-f"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fab fa-instagram"></i></a>
-                </li>
-            </ul>*@
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"><i class="fab fa-instagram"></i></a>
+                    </li>
+                </ul>*@
         </nav>
     </div>
 
@@ -59,6 +64,7 @@
 <div id="graph" class="row h-75"></div>
 
 <Wait @ref="Wait"></Wait>
+<Analysis @ref="Analysis"></Analysis>
 
 <footer>
     <Sources />

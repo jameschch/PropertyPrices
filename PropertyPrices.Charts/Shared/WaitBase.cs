@@ -7,13 +7,15 @@ namespace PropertyPrices.Charts.Shared
     public class WaitBase : ComponentBase
     {
 
+        protected virtual string Selector { get; set; } = "#wait";
+
         [Inject] public IJSRuntime JsRuntime { get; set; }
 
         public void Show()
         {
             using (dynamic context = new EvalContext(JsRuntime))
             {
-                (context as EvalContext).Expression = () => context.jQuery("#wait").show();
+                (context as EvalContext).Expression = () => context.jQuery(Selector).show();
             }
 
         }
@@ -23,10 +25,9 @@ namespace PropertyPrices.Charts.Shared
         {
             using (dynamic context = new EvalContext(JsRuntime))
             {
-                (context as EvalContext).Expression = () => context.jQuery("#wait").hide();
+                (context as EvalContext).Expression = () => context.jQuery(Selector).hide();
             }
         }
-
 
     }
 }
