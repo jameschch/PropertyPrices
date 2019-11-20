@@ -10,19 +10,19 @@
 
             <ul class="navbar-nav mr-auto justify-content-center align-items-center text-center">
                 <li class="nav-item">
-                    <h1 class="d-none d-md-block d-lg-block navbar-brand align-middle">London Property Prices 1968 - 2019</h1>
+                    <h1 class="navbar-brand align-middle">London Property Prices 1968 - 2019</h1>
                 </li>
                 <li class="nav-item pr-1">
                     <select id="historicalSelect" class="@HistoricalClass" @onchange="@ColumnChange">
                         @foreach (var item in ColumnOptions)
                         {
-                            <option value=@item.Key>@item.Value</option>
+                        <option value=@item.Key>@item.Value</option>
                         }
                     </select>
                     <select id="forecastSelect" class="@ForecastClass" @onchange="@ColumnChange">
                         @foreach (var item in ForecastColumnOptions)
                         {
-                            <option value=@item.Key>@item.Value</option>
+                        <option value=@item.Key>@item.Value</option>
                         }
                     </select>
                 </li>
@@ -34,13 +34,13 @@
                 </li>
                 <li class="nav-item pr-1">
                     <div class="btn-group align-middle">
-                        <button type="button" class="btn btn-light btn-sm active" @onclick="@LightClick">Light</button>
-                        <button type="button" class="btn btn-secondary btn-sm" @onclick="@DarkClick">Dark</button>
+                        <button type="button" class="btn btn-sm btn-info" @onclick="@AnalysisClick">Forecast Analysis</button>
                     </div>
                 </li>
                 <li class="nav-item pr-1">
                     <div class="btn-group align-middle">
-                        <button type="button" class="btn btn-sm" @onclick="@AnalysisClick">Forecast Analysis</button>
+                        <button type="button" class="btn btn-light btn-sm active" @onclick="@LightClick">Light</button>
+                        <button type="button" class="btn btn-secondary btn-sm" @onclick="@DarkClick">Dark</button>
                     </div>
                 </li>
             </ul>
@@ -66,7 +66,7 @@
 <Wait @ref="Wait"></Wait>
 <Analysis @ref="Analysis"></Analysis>
 
-<footer>
+<footer class="mt-4">
     <Sources />
     <div class="footer-copyright text-center py-3">
         © 2019 Copyright:

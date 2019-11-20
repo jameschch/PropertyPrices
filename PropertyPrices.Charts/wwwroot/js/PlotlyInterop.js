@@ -5,7 +5,7 @@
             "margin": {
                 "b": 0,
                 "l": 30,
-                "t": 20,
+                "t": 30,
                 "r": 30
             },
             "plot_bgcolor": isDark ? "#000" : "#fff",
@@ -41,8 +41,12 @@
 
     newPlot: function (data) {
         //console.log(data);
-        Plotly.newPlot(document.getElementById("graph"), JSON.parse(data), PlotlyInterop.selectedLayout(), { responsive: true, displayModeBar: true, showSendToCloud: false, displaylogo: false });
+        Plotly.newPlot(document.getElementById("graph"), JSON.parse(data), PlotlyInterop.selectedLayout(), { displayModeBar: true, showSendToCloud: false, displaylogo: false });
 
         return true;
     }
 };
+
+window.onresize = function () {
+    Plotly.Plots.resize(document.getElementById("graph"));
+}
