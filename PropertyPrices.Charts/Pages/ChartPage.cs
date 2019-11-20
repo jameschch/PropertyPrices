@@ -55,6 +55,10 @@ namespace PropertyPrices.Charts.Pages
         {
             if (firstRender)
             {
+                using (dynamic context = new EvalContext(JSRuntime))
+                {
+                    (context as EvalContext).Expression = () => context.jQuery("#historicalSelect").val(Column);
+                }
                 await NewPlot("AveragePrice");
             }
         }
@@ -123,7 +127,7 @@ namespace PropertyPrices.Charts.Pages
             {
                 using (dynamic context = new EvalContext(JSRuntime))
                 {
-                    (context as EvalContext).Expression = () => context.Jquery("#historicalSelect").val(Column);
+                    (context as EvalContext).Expression = () => context.jQuery("#historicalSelect").val(Column);
                 }
 
                 HistoricalClass = "align-middle";
@@ -140,7 +144,7 @@ namespace PropertyPrices.Charts.Pages
                 {
                     using (dynamic context = new EvalContext(JSRuntime))
                     {
-                        (context as EvalContext).Expression = () => context.Jquery("#forecastSelect").val(Column);
+                        (context as EvalContext).Expression = () => context.jQuery("#forecastSelect").val(Column);
                     }
                 }
 
