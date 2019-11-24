@@ -75,6 +75,10 @@ rect.scrollbar {
     width: 5px !important;
 }
 
+#forecastSelect, #historicalSelect {
+    margin-right: 10px;
+}
+
 #floatingCirclesG {
     position: relative;
     width: 90px;
