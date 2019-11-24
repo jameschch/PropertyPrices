@@ -2,6 +2,7 @@
 
     layout: function (isDark) {
         return {
+            "autosize": true,
             "margin": {
                 "b": 0,
                 "l": 30,
@@ -48,5 +49,5 @@
 };
 
 window.onresize = function () {
-    Plotly.Plots.resize(document.getElementById("graph"));
+    //   Plotly.Plots.resize(document.getElementById("graph"));
 }
