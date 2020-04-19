@@ -8,12 +8,10 @@ namespace PropertyPrices.Charts
     {
         public void ConfigureServices(IServiceCollection services)
         {
-                
-                
 
-                services.AddSingleton(new Configuration());
+            services.AddSingleton(new Configuration());
 
-            }
+        }
 
         public void Configure(IComponentsApplicationBuilder app)
         {
